@@ -72,7 +72,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      // Suppress hydration errors due to next-themes behavior
       suppressHydrationWarning
     >
       <body className={ibmPlexMono.variable}>
