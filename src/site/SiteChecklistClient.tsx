@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 'use client';
 
 import {
@@ -174,7 +175,7 @@ export default function SiteChecklistClient({
         <ChecklistRow
           title={hasDatabase && isTestingConnections
             ? 'Testing database connection'
-            : 'Setup database'}
+            : 'Database'}
           status={hasDatabase}
           isPending={hasDatabase && isTestingConnections}
         >
@@ -209,7 +210,7 @@ export default function SiteChecklistClient({
                 : hasMultipleStorageProviders
                   // eslint-disable-next-line max-len
                   ? `Setup storage (new uploads go to: ${labelForStorage(currentStorage)})`
-                  : 'Setup storage'}
+                  : 'Storage'}
           status={hasStorageProvider}
           isPending={hasStorageProvider && isTestingConnections}
         >
@@ -229,7 +230,7 @@ export default function SiteChecklistClient({
               and connect to project
             </>
             )}
-          {hasCloudflareR2Storage
+          {/* {hasCloudflareR2Storage
             ? renderSubStatus('checked', 'Cloudflare R2: connected')
             : renderSubStatus('optional', <>
               {labelForStorage('cloudflare-r2')}:
@@ -248,10 +249,10 @@ export default function SiteChecklistClient({
                 'https://github.com/sambecker/exif-photo-blog#aws-s3',
                 'create/configure bucket',
               )}
-            </>)}
+            </>)} */}
         </ChecklistRow>
       </Checklist>
-      <Checklist
+      {/* <Checklist
         title="Authentication"
         icon={<BiLockAlt size={16} />}
       >
@@ -290,38 +291,38 @@ export default function SiteChecklistClient({
             'ADMIN_PASSWORD',
           ])}
         </ChecklistRow>
-      </Checklist>
+      </Checklist> */}
       <Checklist
         title="Content"
         icon={<BiPencil size={16} />}
       >
         <ChecklistRow
-          title="Add custom domain"
+          title="Domain"
           status={hasDomain}
         >
-          Store in environment variable (displayed in top-right nav):
+          https://photo-blogs.vercel.app
           {renderEnvVars(['NEXT_PUBLIC_SITE_DOMAIN'])}
         </ChecklistRow>
         <ChecklistRow
-          title="Add title"
+          title="Title"
           status={hasTitle}
           optional
         >
-          Store in environment variable (used in page titles):
+          My Photos
           {renderEnvVars(['NEXT_PUBLIC_SITE_TITLE'])}
         </ChecklistRow>
         <ChecklistRow
-          title="Add description"
+          title="Description"
           status={hasDescription}
           optional
         >
-          Store in environment variable (mainly used for OG meta):
+          A website for sharing photos
           {renderEnvVars(['NEXT_PUBLIC_SITE_DESCRIPTION'])}
         </ChecklistRow>
         
       </Checklist>
       {!simplifiedView && <>
-        <Checklist
+        {/* <Checklist
           title="AI Text Generation"
           icon={<HiSparkles />}
           experimental
@@ -371,7 +372,7 @@ export default function SiteChecklistClient({
             tags, description, all, or none (default is {'"all"'}).
             {renderEnvVars(['AI_TEXT_AUTO_GENERATED_FIELDS'])}
           </ChecklistRow>
-        </Checklist>
+        </Checklist> */}
         <Checklist
           title="Settings"
           icon={<BiCog size={16} />}
@@ -390,7 +391,7 @@ export default function SiteChecklistClient({
             title="Static Optimization"
             status={isStaticallyOptimized}
             optional
-            experimental
+            // experimental
           >
             Set environment variable to {'"1"'} to enable static optimization,
             i.e., rendering pages and images at build time:
@@ -424,7 +425,7 @@ export default function SiteChecklistClient({
             image blur data being stored and displayed
             {renderEnvVars(['NEXT_PUBLIC_BLUR_DISABLED'])}
           </ChecklistRow>
-          <ChecklistRow
+          {/* <ChecklistRow
             title="Geo privacy"
             status={isGeoPrivacyEnabled}
             optional
@@ -432,7 +433,7 @@ export default function SiteChecklistClient({
             Set environment variable to {'"1"'} to disable
             collection/display of location-based data
             {renderEnvVars(['NEXT_PUBLIC_GEO_PRIVACY'])}
-          </ChecklistRow>
+          </ChecklistRow> */}
           <ChecklistRow
             title="Priority order"
             status={isPriorityOrderEnabled}
@@ -442,7 +443,7 @@ export default function SiteChecklistClient({
             priority order photo field affecting photo order
             {renderEnvVars(['NEXT_PUBLIC_IGNORE_PRIORITY_ORDER'])}
           </ChecklistRow>
-          <ChecklistRow
+          {/* <ChecklistRow
             title="Public API"
             status={isPublicApiEnabled}
             optional
@@ -450,16 +451,16 @@ export default function SiteChecklistClient({
             Set environment variable to {'"1"'} to enable
             a public API available at <code>/api</code>:
             {renderEnvVars(['NEXT_PUBLIC_PUBLIC_API'])}
-          </ChecklistRow>
-          <ChecklistRow
+          </ChecklistRow> */}
+          {/* <ChecklistRow
             title="Show repo link"
             status={showRepoLink}
             optional
           >
             Set environment variable to {'"1"'} to hide footer link:
             {renderEnvVars(['NEXT_PUBLIC_HIDE_REPO_LINK'])}
-          </ChecklistRow>
-          <ChecklistRow
+          </ChecklistRow> */}
+          {/* <ChecklistRow
             title="Show social"
             status={showSocial}
             optional
@@ -468,7 +469,7 @@ export default function SiteChecklistClient({
             {' '}
             X button from share modal:
             {renderEnvVars(['NEXT_PUBLIC_HIDE_SOCIAL'])}
-          </ChecklistRow>
+          </ChecklistRow> */}
           <ChecklistRow
             title="Show Fujifilm simulations"
             status={showFilmSimulations}
@@ -510,8 +511,7 @@ export default function SiteChecklistClient({
       </>}
       <div className="px-11 space-y-5 pt-0.5">
         <div>
-          Changes to environment variables require a redeploy
-          or reboot of local dev server
+          Cre: https://github.com/Cyndii-Lauper
         </div>
         {!simplifiedView &&
           <div className="text-dim">
@@ -519,7 +519,7 @@ export default function SiteChecklistClient({
             <div>
               Commit:&nbsp;&nbsp;
               {' '}
-              {commitSha ? commitSha.slice(0, 7) : 'Not Found'}
+              {commitSha ? commitSha.slice(0, 7) : 'No Commit'}
             </div>
           </div>}
       </div>
