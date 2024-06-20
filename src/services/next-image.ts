@@ -12,7 +12,7 @@ export const MAX_IMAGE_SIZE: NextImageSize = 3840;
 export const getNextImageUrlForRequest = (
   imageUrl: string,
   size: NextImageSize,
-  quality = 75,
+  quality = 100,
   baseUrl = BASE_URL,
 ) => {
   const url = new URL(`${baseUrl}/_next/image`);
@@ -24,7 +24,5 @@ export const getNextImageUrlForRequest = (
   return url.toString();
 };
 
-// Generate small, low-bandwidth images for quick manipulations such as
-// generating blur data or image thumbnails for AI text generation
 export const getNextImageUrlForManipulation = (imageUrl: string) =>
   getNextImageUrlForRequest(imageUrl, 640, 90);

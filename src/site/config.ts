@@ -123,7 +123,7 @@ export const STATICALLY_OPTIMIZED_OG_IMAGES =
 export const MATTE_PHOTOS =
   process.env.NEXT_PUBLIC_MATTE_PHOTOS === '1';
 export const BLUR_ENABLED =
-  process.env.NEXT_PUBLIC_BLUR_DISABLED !== '1';
+  process.env.NEXT_PUBLIC_BLUR_DISABLED === '1';
 export const GEO_PRIVACY_ENABLED =
   process.env.NEXT_PUBLIC_GEO_PRIVACY === '1';
 export const AI_TEXT_GENERATION_ENABLED =

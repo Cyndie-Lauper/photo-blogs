@@ -17,7 +17,7 @@ export default function ImageInput({
   onBlobReady,
   shouldResize,
   maxSize = MAX_IMAGE_SIZE,
-  quality = 0.8,
+  quality = 1,
   loading,
   showUploadStatus = true,
   debug,

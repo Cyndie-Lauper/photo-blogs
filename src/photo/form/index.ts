@@ -99,7 +99,7 @@ const FORM_METADATA = (
     label: 'fujifilm simulation',
     selectOptions: FILM_SIMULATION_FORM_INPUT_OPTIONS,
     selectOptionsDefaultLabel: 'Unknown',
-    shouldHide: ({ make }) => make !== MAKE_FUJIFILM,
+    shouldHide: ({ make }) => make === MAKE_FUJIFILM,
   },
   focalLength: { label: 'focal length' },
   focalLengthIn35MmFormat: { label: 'focal length 35mm-equivalent' },
