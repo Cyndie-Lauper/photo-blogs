@@ -14,6 +14,7 @@ import {
 } from '@/site/paths';
 import AnimateItems from '../components/AnimateItems';
 import { useAppState } from '@/state/AppState';
+import ThemeSwitcherNav from './ThemeSwitcherNav';
 
 export default function Nav({
   siteDomainOrTitle,
@@ -58,6 +59,11 @@ export default function Nav({
                 'flex items-center',
                 'w-full min-h-[4rem]',
               )}>
+              <div className={clsx(
+                'pr-[10px]',
+              )}>
+                <ThemeSwitcherNav />
+              </div>
               <ViewSwitcher
                 currentSelection={switcherSelectionForPath()}
                 showAdmin={isUserSignedIn}
