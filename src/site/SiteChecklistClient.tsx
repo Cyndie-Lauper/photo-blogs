@@ -509,9 +509,10 @@ export default function SiteChecklistClient({
           </ChecklistRow>
         </Checklist>
       </>}
-      <div className="px-11 space-y-5 pt-0.5">
+      <div className="pl-11 pr-2 sm:pr-11 mt-4 md:mt-7">
         <div>
-          Cre: https://github.com/Cyndii-Lauper
+        Changes to environment variables require a redeploy
+        or reboot of local dev server
         </div>
         {!simplifiedView &&
           <div className="text-dim">
