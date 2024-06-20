@@ -161,10 +161,22 @@ export default function SiteChecklistClient({
       </span>
     </div>;
 
-  const renderConnectionError = (provider: string, error: string) =>
+  const renderError = ({
+    connection,
+    message,
+  }: {
+    connection?: { provider: string; error: string };
+    message?: string;
+  }) => (
     <ErrorNote size="small" className="mt-2 mb-3">
-      {provider} connection error: {`"${error}"`}
-    </ErrorNote>;
+      {connection && (
+        <>
+          {connection.provider} connection error: {`"${connection.error}"`}
+        </>
+      )}
+      {message}
+    </ErrorNote>
+  );
 
   return (
     <div className="max-w-xl space-y-6 w-full">
@@ -179,8 +191,9 @@ export default function SiteChecklistClient({
           status={hasDatabase}
           isPending={hasDatabase && isTestingConnections}
         >
-          {databaseError &&
-            renderConnectionError('Database', databaseError)}
+          {databaseError && renderError({
+            connection: { provider: 'Database', error: databaseError },
+          })}
           {hasVercelPostgres
             ? renderSubStatus('checked', 'Vercel Postgres: connected')
             : renderSubStatus('optional', <>
@@ -214,8 +227,9 @@ export default function SiteChecklistClient({
           status={hasStorageProvider}
           isPending={hasStorageProvider && isTestingConnections}
         >
-          {storageError &&
-            renderConnectionError('Storage', storageError)}
+          {storageError && renderError({
+            connection: { provider: 'Storage', error: storageError },
+          })}
           {hasVercelBlobStorage
             ? renderSubStatus('checked', 'Vercel Blob: connected')
             : renderSubStatus('optional', <>
@@ -297,9 +311,15 @@ export default function SiteChecklistClient({
         icon={<BiPencil size={16} />}
       >
         <ChecklistRow
-          title="Domain"
+          title="Configure domain"
           status={hasDomain}
         >
+          {!hasDomain &&
+            renderError({
+              message:
+                'Not configuring a domain may cause ' +
+                'certain features to behave unexpectedly',
+            })}
           https://photo-blogs.vercel.app
           {renderEnvVars(['NEXT_PUBLIC_SITE_DOMAIN'])}
         </ChecklistRow>
@@ -509,17 +529,18 @@ export default function SiteChecklistClient({
           </ChecklistRow>
         </Checklist>
       </>}
-      <div className="px-11 space-y-5 pt-0.5">
+      <div className="pl-11 pr-2 sm:pr-11 mt-4 md:mt-7">
         <div>
-          Cre: https://github.com/Cyndii-Lauper
+        Changes to environment variables require a redeploy
+        or reboot of local dev server
         </div>
         {!simplifiedView &&
           <div className="text-dim">
-            <div>Base Url: {baseUrl || 'Not Defined'}</div>
+            <div>Domain: {baseUrl || 'Not Defined'}</div>
             <div>
-              Commit:&nbsp;&nbsp;
-              {' '}
-              {commitSha ? commitSha.slice(0, 7) : 'No Commit'}
+              <span className="font-bold">Commit</span>
+              &nbsp;&nbsp;
+              {commitSha || 'No commit'}
             </div>
           </div>}
       </div>
