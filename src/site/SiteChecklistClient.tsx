@@ -463,7 +463,7 @@ export default function SiteChecklistClient({
             priority order photo field affecting photo order
             {renderEnvVars(['NEXT_PUBLIC_IGNORE_PRIORITY_ORDER'])}
           </ChecklistRow>
-          {/* <ChecklistRow
+          <ChecklistRow
             title="Public API"
             status={isPublicApiEnabled}
             optional
@@ -471,7 +471,7 @@ export default function SiteChecklistClient({
             Set environment variable to {'"1"'} to enable
             a public API available at <code>/api</code>:
             {renderEnvVars(['NEXT_PUBLIC_PUBLIC_API'])}
-          </ChecklistRow> */}
+          </ChecklistRow>
           {/* <ChecklistRow
             title="Show repo link"
             status={showRepoLink}
