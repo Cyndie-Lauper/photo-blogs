@@ -1,8 +1,5 @@
-import {
-  sql,
-  query,
-  convertArrayToPostgresString,
-} from '@/services/postgres';
+/* eslint-disable max-len */
+import { sql, query, convertArrayToPostgresString } from '@/services/postgres';
 import {
   PhotoDb,
   PhotoDbInsert,
@@ -26,7 +23,7 @@ import { Lenses, createLensKey } from '@/lens';
 import { screenForPPR } from '@/utility/prr';
 
 const createPhotosTable = () =>
-  sql`
+  sql`=
     CREATE TABLE IF NOT EXISTS photos (
       id VARCHAR(8) PRIMARY KEY,
       url VARCHAR(255) NOT NULL,
@@ -68,7 +65,7 @@ const runMigration01 = () =>
     ADD COLUMN IF NOT EXISTS caption TEXT,
     ADD COLUMN IF NOT EXISTS semantic_description TEXT
   `;
-
+  
 // Migration 02
 const MIGRATION_FIELDS_02 = ['lens_make', 'lens_model'];
 const runMigration02 = () =>
@@ -91,17 +88,25 @@ const safelyQueryPhotos = async <T>(
     result = await callback();
   } catch (e: any) {
     screenForPPR(e, undefined, 'neon postgres');
-    if (MIGRATION_FIELDS_01.some(field => new RegExp(
-      `column "${field}" of relation "photos" does not exist`,
-      'i',
-    ).test(e.message))) {
+    if (
+      MIGRATION_FIELDS_01.some((field) =>
+        new RegExp(
+          `column "${field}" of relation "photos" does not exist`,
+          'i'
+        ).test(e.message)
+      )
+    ) {
       console.log('Running migration 01 ...');
       await runMigration01();
       result = await callback();
-    } else if (MIGRATION_FIELDS_02.some(field => new RegExp(
-      `column "${field}" of relation "photos" does not exist`,
-      'i',
-    ).test(e.message))) {
+    } else if (
+      MIGRATION_FIELDS_02.some((field) =>
+        new RegExp(
+          `column "${field}" of relation "photos" does not exist`,
+          'i'
+        ).test(e.message)
+      )
+    ) {
       console.log('Running migration 02 ...');
       await runMigration02();
       result = await callback();
@@ -113,7 +118,7 @@ const safelyQueryPhotos = async <T>(
     } else if (/endpoint is in transition/i.test(e.message)) {
       console.log('sql get error: endpoint is in transition (setting timeout)');
       // Wait 5 seconds and try again
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       try {
         result = await callback();
       } catch (e: any) {
@@ -127,8 +132,7 @@ const safelyQueryPhotos = async <T>(
   }
 
   if (SHOULD_DEBUG_SQL && debugMessage) {
-    const time =
-      (((new Date()).getTime() - start.getTime()) / 1000).toFixed(2);
+    const time = ((new Date().getTime() - start.getTime()) / 1000).toFixed(2);
     console.log(`Executing sql query: ${debugMessage} (${time} seconds)`);
   }
 
@@ -137,7 +141,8 @@ const safelyQueryPhotos = async <T>(
 
 // Must provide id as 8-character nanoid
 export const insertPhoto = (photo: PhotoDbInsert) =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () => sql`
     INSERT INTO photos (
       id,
       url,
@@ -196,10 +201,13 @@ export const insertPhoto = (photo: PhotoDbInsert) =>
       ${photo.takenAt},
       ${photo.takenAtNaive}
     )
-  `, 'insertPhoto');
+  `,
+    'insertPhoto'
+  );
 
 export const updatePhoto = (photo: PhotoDbInsert) =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () => sql`
     UPDATE photos SET
     url=${photo.url},
     extension=${photo.extension},
@@ -227,62 +235,90 @@ export const updatePhoto = (photo: PhotoDbInsert) =>
     hidden=${photo.hidden},
     taken_at=${photo.takenAt},
     taken_at_naive=${photo.takenAtNaive},
-    updated_at=${(new Date()).toISOString()}
+    updated_at=${new Date().toISOString()}
     WHERE id=${photo.id}
-  `, 'updatePhoto');
+  `,
+    'updatePhoto'
+  );
 
 export const deletePhotoTagGlobally = (tag: string) =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () => sql`
     UPDATE photos
     SET tags=ARRAY_REMOVE(tags, ${tag})
     WHERE ${tag}=ANY(tags)
-  `, 'deletePhotoTagGlobally');
+  `,
+    'deletePhotoTagGlobally'
+  );
 
 export const renamePhotoTagGlobally = (tag: string, updatedTag: string) =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () => sql`
     UPDATE photos
     SET tags=ARRAY_REPLACE(tags, ${tag}, ${updatedTag})
     WHERE ${tag}=ANY(tags)
-  `, 'renamePhotoTagGlobally');
+  `,
+    'renamePhotoTagGlobally'
+  );
 
 export const deletePhoto = (id: string) =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () => sql`
     DELETE FROM photos WHERE id=${id}
-  `, 'deletePhoto');
+  `,
+    'deletePhoto'
+  );
 
 export const getPhotosMostRecentUpdate = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT updated_at FROM photos ORDER BY updated_at DESC LIMIT 1
-  `.then(({ rows }) => rows[0] ? rows[0].updated_at as Date : undefined)
-  , 'getPhotosMostRecentUpdate');
+  `.then(({ rows }) => (rows[0] ? (rows[0].updated_at as Date) : undefined)),
+    'getPhotosMostRecentUpdate'
+  );
 
 export const getUniqueTags = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT unnest(tags) as tag, COUNT(*)
     FROM photos
     WHERE hidden IS NOT TRUE
     GROUP BY tag
     ORDER BY tag ASC
-  `.then(({ rows }): TagsWithMeta => rows.map(({ tag, count }) => ({
-      tag: tag as string,
-      count: parseInt(count, 10),
-    })))
-  , 'getUniqueTags');
+  `.then(
+          ({ rows }): TagsWithMeta =>
+            rows.map(({ tag, count }) => ({
+              tag: tag as string,
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueTags'
+  );
 
 export const getUniqueTagsHidden = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT unnest(tags) as tag, COUNT(*)
     FROM photos
     GROUP BY tag
     ORDER BY tag ASC
-  `.then(({ rows }): TagsWithMeta => rows.map(({ tag, count }) => ({
-      tag: tag as string,
-      count: parseInt(count, 10),
-    })))
-  , 'getUniqueTagsHidden');
+  `.then(
+          ({ rows }): TagsWithMeta =>
+            rows.map(({ tag, count }) => ({
+              tag: tag as string,
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueTagsHidden'
+  );
 
 export const getUniqueCameras = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT make||' '||model as camera, make, model, COUNT(*)
     FROM photos
     WHERE hidden IS NOT TRUE
@@ -290,15 +326,21 @@ export const getUniqueCameras = async () =>
     AND trim(model) <> ''
     GROUP BY make, model
     ORDER BY camera ASC
-  `.then(({ rows }): Cameras => rows.map(({ make, model, count }) => ({
-      cameraKey: createCameraKey({ make, model }),
-      camera: { make, model },
-      count: parseInt(count, 10),
-    })))
-  , 'getUniqueCameras');
+  `.then(
+          ({ rows }): Cameras =>
+            rows.map(({ make, model, count }) => ({
+              cameraKey: createCameraKey({ make, model }),
+              camera: { make, model },
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueCameras'
+  );
 
 export const getUniqueLenses = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT lens_make||' '||lens_model as lens,
     lens_make, lens_model, COUNT(*)
     FROM photos
@@ -307,55 +349,65 @@ export const getUniqueLenses = async () =>
     AND trim(lens_model) <> ''
     GROUP BY lens_make, lens_model
     ORDER BY lens ASC
-  `.then(({ rows }): Lenses => rows
-      .map(({ lens_make: make, lens_model: model, count }) => ({
-        lensKey: createLensKey({ make, model }),
-        lens: { make, model },
-        count: parseInt(count, 10),
-      })))
-  , 'getUniqueLenses');
+  `.then(
+          ({ rows }): Lenses =>
+            rows.map(({ lens_make: make, lens_model: model, count }) => ({
+              lensKey: createLensKey({ make, model }),
+              lens: { make, model },
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueLenses'
+  );
 
 export const getUniqueFilmSimulations = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT film_simulation, COUNT(*)
     FROM photos
     WHERE hidden IS NOT TRUE AND film_simulation IS NOT NULL
     GROUP BY film_simulation
     ORDER BY film_simulation ASC
-  `.then(({ rows }): FilmSimulations => rows
-      .map(({ film_simulation, count }) => ({
-        simulation: film_simulation as FilmSimulation,
-        count: parseInt(count, 10),
-      })))
-  , 'getUniqueFilmSimulations');
+  `.then(
+          ({ rows }): FilmSimulations =>
+            rows.map(({ film_simulation, count }) => ({
+              simulation: film_simulation as FilmSimulation,
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueFilmSimulations'
+  );
 
 export const getUniqueFocalLengths = async () =>
-  safelyQueryPhotos(() => sql`
+  safelyQueryPhotos(
+    () =>
+      sql`
     SELECT DISTINCT focal_length, COUNT(*)
     FROM photos
     WHERE hidden IS NOT TRUE AND focal_length IS NOT NULL
     GROUP BY focal_length
     ORDER BY focal_length ASC
-  `.then(({ rows }): FocalLengths => rows
-      .map(({ focal_length, count }) => ({
-        focal: parseInt(focal_length, 10),
-        count: parseInt(count, 10),
-      })))
-  , 'getUniqueFocalLengths');
+  `.then(
+          ({ rows }): FocalLengths =>
+            rows.map(({ focal_length, count }) => ({
+              focal: parseInt(focal_length, 10),
+              count: parseInt(count, 10),
+            }))
+        ),
+    'getUniqueFocalLengths'
+  );
 
 export const getPhotos = async (options: GetPhotosOptions = {}) =>
   safelyQueryPhotos(async () => {
     const sql = ['SELECT * FROM photos'];
     const values = [] as (string | number)[];
 
-    const {
-      wheres,
-      wheresValues,
-      lastValuesIndex,
-    } = getWheresFromOptions(options);
+    const { wheres, wheresValues, lastValuesIndex } =
+      getWheresFromOptions(options);
 
     let valuesIndex = lastValuesIndex;
-    
+
     if (wheres) {
       sql.push(wheres);
       values.push(...wheresValues);
@@ -363,31 +415,27 @@ export const getPhotos = async (options: GetPhotosOptions = {}) =>
 
     sql.push(getOrderByFromOptions(options));
 
-    const {
-      limitAndOffset,
-      limitAndOffsetValues,
-    } = getLimitAndOffsetFromOptions(options, valuesIndex);
+    const { limitAndOffset, limitAndOffsetValues } =
+      getLimitAndOffsetFromOptions(options, valuesIndex);
 
     // LIMIT + OFFSET
     sql.push(limitAndOffset);
     values.push(...limitAndOffsetValues);
 
-    return query(sql.join(' '), values)
-      .then(({ rows }) => rows.map(parsePhotoFromDb));
+    return query(sql.join(' '), values).then(({ rows }) =>
+      rows.map(parsePhotoFromDb)
+    );
   }, 'getPhotos');
 
 export const getPhotosNearId = async (
   photoId: string,
-  options: GetPhotosOptions,
+  options: GetPhotosOptions
 ) =>
   safelyQueryPhotos(async () => {
     const { limit } = options;
 
-    const {
-      wheres,
-      wheresValues,
-      lastValuesIndex,
-    } = getWheresFromOptions(options);
+    const { wheres, wheresValues, lastValuesIndex } =
+      getWheresFromOptions(options);
 
     let valuesIndex = lastValuesIndex;
 
@@ -406,50 +454,56 @@ export const getPhotosNearId = async (
         LIMIT $${valuesIndex++}
       `,
       [...wheresValues, photoId, limit]
-    )
-      .then(({ rows }) => {
-        const photo = rows.find(({ id }) => id === photoId);
-        const indexNumber = photo ? parseInt(photo.row_number) : undefined;
-        return {
-          photos: rows.map(parsePhotoFromDb),
-          indexNumber,
-        };
-      });
-  }, `getPhotosNearId: ${photoId}`);    
+    ).then(({ rows }) => {
+      const photo = rows.find(({ id }) => id === photoId);
+      const indexNumber = photo ? parseInt(photo.row_number) : undefined;
+      return {
+        photos: rows.map(parsePhotoFromDb),
+        indexNumber,
+      };
+    });
+  }, `getPhotosNearId: ${photoId}`);
 
 export const getPhotosMeta = (options: GetPhotosOptions = {}) =>
   safelyQueryPhotos(async () => {
     // eslint-disable-next-line max-len
-    let sql = 'SELECT COUNT(*), MIN(taken_at_naive) as start, MAX(taken_at_naive) as end FROM photos';
+    let sql =
+      'SELECT COUNT(*), MIN(taken_at_naive) as start, MAX(taken_at_naive) as end FROM photos';
     const { wheres, wheresValues } = getWheresFromOptions(options);
-    if (wheres) { sql += ` ${wheres}`; }
-    return query(sql, wheresValues)
-      .then(({ rows }) => ({
-        count: parseInt(rows[0].count, 10),
-        ...rows[0]?.start && rows[0]?.end
-          ? { dateRange: rows[0] as PhotoDateRange }
-          : undefined,
-      }));
+    if (wheres) {
+      sql += ` ${wheres}`;
+    }
+    return query(sql, wheresValues).then(({ rows }) => ({
+      count: parseInt(rows[0].count, 10),
+      ...(rows[0]?.start && rows[0]?.end
+        ? { dateRange: rows[0] as PhotoDateRange }
+        : undefined),
+    }));
   }, 'getPhotosMeta');
 
 export const getPhotoIds = async ({ limit }: { limit?: number }) =>
-  safelyQueryPhotos(() => (limit
-    ? sql`SELECT id FROM photos LIMIT ${limit}`
-    : sql`SELECT id FROM photos`)
-    .then(({ rows }) => rows.map(({ id }) => id as string))
-  , 'getPhotoIds');
+  safelyQueryPhotos(
+    () =>
+      (limit
+        ? sql`SELECT id FROM photos LIMIT ${limit}`
+        : sql`SELECT id FROM photos`
+      ).then(({ rows }) => rows.map(({ id }) => id as string)),
+    'getPhotoIds'
+  );
 
 export const getPhoto = async (
   id: string,
-  includeHidden?: boolean,
+  includeHidden?: boolean
 ): Promise<Photo | undefined> =>
   safelyQueryPhotos(async () => {
     // Check for photo id forwarding and convert short ids to uuids
     const photoId = translatePhotoId(id);
-    return (includeHidden
-      ? sql<PhotoDb>`SELECT * FROM photos WHERE id=${photoId} LIMIT 1`
-      // eslint-disable-next-line max-len
-      : sql<PhotoDb>`SELECT * FROM photos WHERE id=${photoId} AND hidden IS NOT TRUE LIMIT 1`)
+    return (
+      includeHidden
+        ? sql<PhotoDb>`SELECT * FROM photos WHERE id=${photoId} LIMIT 1`
+        : // eslint-disable-next-line max-len
+        sql<PhotoDb>`SELECT * FROM photos WHERE id=${photoId} AND hidden IS NOT TRUE LIMIT 1`
+    )
       .then(({ rows }) => rows.map(parsePhotoFromDb))
-      .then(photos => photos.length > 0 ? photos[0] : undefined);
+      .then((photos) => (photos.length > 0 ? photos[0] : undefined));
   }, 'getPhoto');
