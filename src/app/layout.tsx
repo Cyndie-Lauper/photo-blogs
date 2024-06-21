@@ -82,7 +82,7 @@ export default function RootLayout({
                 'mx-3 mb-3',
                 'lg:mx-6 lg:mb-6',
               )}>
-                <Nav siteDomainOrTitle={'Photo Blogs'} />
+               <Nav siteDomainOrTitle={SITE_DOMAIN_OR_TITLE} />
                 <div className={clsx(
                   'min-h-[16rem] sm:min-h-[30rem]',
                   'mb-12',
