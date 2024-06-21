@@ -9,7 +9,7 @@ export default function StatusIcon({
   type,
   loading,
 }: {
-  type: 'checked' | 'missing' | 'optional'
+  type: 'checked' | 'missing' | 'warning' | 'optional'
   loading?: boolean
 }) {
   const getIcon = () => {
