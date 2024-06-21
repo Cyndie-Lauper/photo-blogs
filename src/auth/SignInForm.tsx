@@ -1,7 +1,6 @@
 'use client';
 
 import FieldSetWithStatus from '@/components/FieldSetWithStatus';
-import InfoBlock from '@/components/InfoBlock';
 import SubmitButtonWithStatus from '@/components/SubmitButtonWithStatus';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { getAuthAction, signInAction } from './actions';
@@ -12,6 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import { useAppState } from '@/state/AppState';
 import { clsx } from 'clsx/lite';
 import { FiLock } from 'react-icons/fi';
+import Container from '@/components/Container';
 
 export default function SignInForm() {
   const params = useSearchParams();
@@ -40,7 +40,7 @@ export default function SignInForm() {
     password.length > 0;
 
   return (
-    <InfoBlock className={clsx(
+    <Container className={clsx(
       'w-[calc(100vw-1.5rem)] sm:w-[min(360px,90vw)]',
       'px-6 py-5',
     )}>
@@ -89,6 +89,6 @@ export default function SignInForm() {
           </SubmitButtonWithStatus>
         </div>
       </form>
-    </InfoBlock>
+    </Container>
   );
 }

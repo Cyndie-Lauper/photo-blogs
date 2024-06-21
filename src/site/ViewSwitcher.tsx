@@ -11,7 +11,6 @@ export type SwitcherSelection = 'full-frame' | 'grid' | 'sets' | 'admin';
 
 export default function ViewSwitcher({
   currentSelection,
-  showAdmin,
 }: {
   currentSelection?: SwitcherSelection
   showAdmin?: boolean
@@ -33,12 +32,11 @@ export default function ViewSwitcher({
           active={currentSelection === 'grid'}
           noPadding
         />
-        {showAdmin &&
-          <SwitcherItem
-            icon={<BiLockAlt size={16} className="translate-y-[-0.5px]" />}
-            href={PATH_ADMIN_PHOTOS}
-            active={currentSelection === 'admin'}
-          />}
+        <SwitcherItem
+          icon={<BiLockAlt size={16} className="translate-y-[-0.5px]" />}
+          href={PATH_ADMIN_PHOTOS}
+          active={currentSelection === 'admin'}
+        />
       </Switcher>
       <Switcher type="borderless">
         <SwitcherItem
