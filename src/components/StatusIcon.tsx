@@ -24,6 +24,11 @@ export default function StatusIcon({
         size={14}
         className="text-red-400 translate-x-[2px] translate-y-[1.5px]"
       />;
+    case 'warning':
+      return <BiSolidXSquare
+        size={14}
+        className="text-amber-500 translate-x-[2px] translate-y-[1.5px]"
+      />;
     case 'optional':
       return <BiSolidCheckboxMinus
         size={18}
