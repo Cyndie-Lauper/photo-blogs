@@ -8,7 +8,7 @@ export default function ToasterWithThemes() {
   const { theme } = useTheme();
   return (
     <Toaster
-      theme={theme as 'dark' | 'light' | 'system' }
+      theme={theme as 'system' | 'light' | 'dark' }
       toastOptions={{
         unstyled: true,
         classNames: {

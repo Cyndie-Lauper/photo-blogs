@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 'use client';
 
 import { clsx } from 'clsx/lite';
@@ -7,7 +8,7 @@ import Link from 'next/link';
 import { SHOW_REPO_LINK } from '@/site/config';
 import RepoLink from '../components/RepoLink';
 import { usePathname } from 'next/navigation';
-import { PATH_ADMIN_PHOTOS, isPathAdmin, isPathSignIn } from './paths';
+import { isPathAdmin, isPathSignIn } from './paths';
 import SubmitButtonWithStatus from '@/components/SubmitButtonWithStatus';
 import { signOutAndRedirectAction } from '@/auth/actions';
 import Spinner from '@/components/Spinner';
@@ -57,8 +58,8 @@ export default function Footer() {
                     </>}
                   </>
                   : <>
-                    <Link href={PATH_ADMIN_PHOTOS}>
-                      Admin
+                    <Link href={'https://github.com/Cyndii-Lauper/photo-blogs.git'}>
+                      Repository
                     </Link>
                     {SHOW_REPO_LINK &&
                       <RepoLink />}
