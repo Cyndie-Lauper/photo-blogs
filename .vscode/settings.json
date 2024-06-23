@@ -58,5 +58,85 @@
   ],
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  // Which bundle size to use for selecting the color
+	"importCost.bundleSizeColoring": "minified",
+
+	// Which bundle size to display
+	"importCost.bundleSizeDecoration": "both",
+
+	// Enable debug logging
+	"importCost.debug": false,
+
+	// Decoration font style
+	"importCost.fontStyle": "normal",
+
+	// File extensions to be parsed by the Javascript parser
+	"importCost.javascriptExtensions": [
+		"\\.jsx?$"
+	],
+
+	// Decoration color for large packages in dark theme
+	"importCost.largePackageDarkColor": "#d44e40",
+
+	// Decoration color for large packages in light theme
+	"importCost.largePackageLightColor": "#d44e40",
+
+	// Decoration margin from end of line
+	"importCost.margin": 1,
+
+	// Decoration color for medium packages in dark theme
+	"importCost.mediumPackageDarkColor": "#c90076",
+
+	// Decoration color for medium packages in light theme
+	"importCost.mediumPackageLightColor": "#c90076",
+
+	// Upper size limit, in KB, that will count a package as a medium package
+	"importCost.mediumPackageSize": 100,
+
+	// Display the 'calculating' decoration when starting to calculate the size
+	"importCost.showCalculatingDecoration": true,
+
+	// Decoration color for small packages in dark theme
+	"importCost.smallPackageDarkColor": "#f1c232",
+
+	// Decoration color for small packages in light theme
+	"importCost.smallPackageLightColor": "#f1c232",
+
+	// Upper size limit, in KB, that will count a package as a small package
+	"importCost.smallPackageSize": 50,
+
+	// File extensions to be parsed by the Svelte parser
+	"importCost.svelteExtensions": [
+		"\\.svelte$"
+	],
+
+	// Size calculation timeout in milliseconds
+	"importCost.timeout": 20000,
+
+	// File extensions to be parsed by the Typescript parser
+	"importCost.typescriptExtensions": [
+		"\\.tsx?$"
+	],
+
+	// File extensions to be parsed by the Vue parser
+	"importCost.vueExtensions": [
+		"\\.vue$"
+	],
+
+  // Adds found items to intellisense and automatically imports then
+	"autoimport.autoComplete": true,
+
+	// Specifies wether to use double quotes
+	"autoimport.doubleQuotes": false,
+
+	// Glob for files to watch and scan, e.g ./src/** ./src/app/**/*.ts. Defaults to **/*.{ts,tsx}
+	"autoimport.filesToScan": "**/*.{ts,tsx,js}",
+
+	// Specifies wether to use spaces between first and last brace
+	"autoimport.spaceBetweenBraces": true,
+
+	// Use ; at the end of a line e.g Import * from ./app or Import * from ./app; - Default True
+	"autoimport.useSemiColon": true,
+
 }
