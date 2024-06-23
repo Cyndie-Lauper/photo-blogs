@@ -5,7 +5,6 @@ import { IBM_Plex_Mono } from 'next/font/google';
 import {
   BASE_URL,
   SITE_DESCRIPTION,
-  SITE_DOMAIN_OR_TITLE,
   SITE_TITLE,
 } from '@/site/config';
 import AppStateProvider from '@/state/AppStateProvider';
