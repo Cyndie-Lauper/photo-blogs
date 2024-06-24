@@ -253,6 +253,9 @@ export const checkPathPrefix = (pathname = '', prefix: string) =>
 export const isPathGrid = (pathname?: string) =>
   checkPathPrefix(pathname, PATH_GRID);
 
+export const isPathFullFrame = (pathname?: string) =>
+  checkPathPrefix(pathname, PATH_FULL);
+
 export const isPathSignIn = (pathname?: string) =>
   checkPathPrefix(pathname, PATH_SIGN_IN);
 

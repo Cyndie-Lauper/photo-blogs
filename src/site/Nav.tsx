@@ -8,6 +8,7 @@ import ViewSwitcher, { SwitcherSelection } from '@/site/ViewSwitcher';
 import {
   PATH_ROOT,
   isPathAdmin,
+  isPathFullFrame,
   isPathGrid,
   isPathProtected,
   isPathSignIn,
@@ -37,6 +38,8 @@ export default function Nav({
 
   const switcherSelectionForPath = (): SwitcherSelection | undefined => {
     if (pathname === PATH_ROOT) {
+      return 'square';
+    } else if (isPathFullFrame(pathname)) {
       return 'full-frame';
     } else if (isPathGrid(pathname)) {
       return 'grid';
