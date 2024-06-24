@@ -6,10 +6,8 @@ import {
   doesPhotoNeedBlurCompatibility,
   shouldShowCameraDataForPhoto,
   shouldShowExifDataForPhoto,
-  titleForPhoto,
 } from '.';
-import SiteGrid from '@/components/SiteGrid';
-import ImageLarge from '@/components/image/ImageLarge';
+import ImageExtraLarge from '@/components/image/ImageExtraLarge';
 import { clsx } from 'clsx/lite';
 import Link from 'next/link';
 import {
@@ -26,20 +24,19 @@ import { sortTags } from '@/tag';
 import DivDebugBaselineGrid from '@/components/DivDebugBaselineGrid';
 import PhotoLink from './PhotoLink';
 import { SHOULD_PREFETCH_ALL_LINKS } from '@/site/config';
-import AdminPhotoMenuClient from '@/admin/AdminPhotoMenuClient';
 import { RevalidatePhoto } from './InfinitePhotoScroll';
 import { useRef } from 'react';
 import useOnVisible from '@/utility/useOnVisible';
 import PhotoDate from './PhotoDate';
 import { useAppState } from '@/state/AppState';
+import SiteGridExtra from '@/components/SiteGridExtra';
 
-export default function PhotoLarge({
+export default function PhotoExtraLarge({
   photo,
   primaryTag,
   priority,
   prefetch = SHOULD_PREFETCH_ALL_LINKS,
   prefetchRelatedLinks = SHOULD_PREFETCH_ALL_LINKS,
-  revalidatePhoto,
   showCamera = true,
   showSimulation = true,
   shouldShare = true,
@@ -48,7 +45,6 @@ export default function PhotoLarge({
   shouldShareSimulation,
   shouldShareFocalLength,
   shouldScrollOnShare,
-  includeFavoriteInAdminMenu,
   onVisible,
 }: {
   photo: Photo
@@ -83,7 +79,7 @@ export default function PhotoLarge({
   const { arePhotosMatted } = useAppState();
 
   return (
-    <SiteGrid
+    <SiteGridExtra
       containerRef={ref}
       contentMain={
         <Link
@@ -100,7 +96,7 @@ export default function PhotoLarge({
               ? 'h-[80%]'
               : 'h-[90%]',
           )}>
-            <ImageLarge
+            <ImageExtraLarge
               className={clsx(arePhotosMatted && 'h-full')}
               imgClassName={clsx(arePhotosMatted &&
                 'object-contain w-full h-full')}
@@ -117,33 +113,33 @@ export default function PhotoLarge({
         <DivDebugBaselineGrid className={clsx(
           'relative',
           'sticky top-4 self-start -translate-y-1',
-          'grid grid-cols-2 md:grid-cols-1',
+          'grid grid-cols-2 md:grid-cols-4',
           'gap-x-0.5 sm:gap-x-1 gap-y-baseline',
           'pb-6',
         )}>
           {/* Meta */}
-          <div className="pr-2 md:pr-0">
-            <div className="md:relative flex gap-2 items-start">
-              <PhotoLink
-                photo={photo}
-                className="font-bold uppercase flex-grow"
-                prefetch={prefetch}
-              />
-              <div className="absolute right-0 translate-y-[-4px] z-10">
-                <AdminPhotoMenuClient {...{
-                  photo,
-                  revalidatePhoto,
-                  includeFavorite: includeFavoriteInAdminMenu,
-                  ariaLabel: `Admin menu for '${titleForPhoto(photo)}' photo`,
-                }} />
-              </div>
-            </div>
-            <div className="space-y-baseline">
-              {photo.caption &&
-                <div className='normal-case'>
-                  {photo.caption}
-                </div>}
-              {(showCameraContent || showTagsContent) &&
+          <div className="md:relative flex gap-2 items-start">
+            <ul>
+              <li>
+                <PhotoLink
+                  photo={photo}
+                  className="font-bold uppercase flex-grow"
+                  prefetch={prefetch}
+                />
+              </li>
+              <li>
+                <div>
+                  {photo.caption &&
+                  <div className='normal-case'>
+                    {photo.caption}
+                  </div>}
+                </div>
+              </li>
+            </ul>
+          </div>
+            
+          <div className="space-y-baseline">
+            {(showCameraContent || showTagsContent) &&
                 <div>
                   {showCameraContent &&
                     <PhotoCamera
@@ -158,7 +154,6 @@ export default function PhotoLarge({
                       prefetch={prefetchRelatedLinks}
                     />}
                 </div>}
-            </div>
           </div>
           {/* EXIF Data */}
           <div className="space-y-baseline">
@@ -195,14 +190,15 @@ export default function PhotoLarge({
                     prefetch={prefetchRelatedLinks}
                   />}
               </>}
-            <div className={clsx(
-              'flex gap-x-2 gap-y-baseline',
-              'md:flex-col md:justify-normal',
-            )}>
-              <PhotoDate
-                photo={photo}
-                className="text-medium"
-              />
+            
+            
+          </div>
+          <div className='flex flex-auto'>
+            <PhotoDate
+              photo={photo}
+              className="text-medium"
+            />
+            <div className="absolute right-0 translate-y-[-4px] z-10">
               {shouldShare &&
                 <ShareButton
                   className={clsx(

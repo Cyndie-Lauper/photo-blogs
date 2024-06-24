@@ -93,8 +93,8 @@ export default function RootLayout({
               <CommandK />
             </ThemeProvider>
           </SwrConfigClient>
-          <Analytics debug={false} />
-          <SpeedInsights debug={false}  />
+          <Analytics debug={true} />
+          <SpeedInsights debug={true}  />
           <PhotoEscapeHandler />
           <ToasterWithThemes />
         </AppStateProvider>
