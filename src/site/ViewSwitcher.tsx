@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import Switcher from '@/components/Switcher';
 import SwitcherItem from '@/components/SwitcherItem';
 import IconFullFrame from '@/site/IconFullFrame';
@@ -8,10 +9,11 @@ import IconSearch from './IconSearch';
 import { useAppState } from '@/state/AppState';
 import IconSquare from './IconSquare';
 
-export type SwitcherSelection = 'full-frame' | 'grid' | 'sets' | 'admin';
+export type SwitcherSelection = 'square' | 'full-frame' | 'grid' | 'admin' ;
 
 export default function ViewSwitcher({
   currentSelection,
+  showAdmin,
 }: {
   currentSelection?: SwitcherSelection
   showAdmin?: boolean
@@ -24,13 +26,13 @@ export default function ViewSwitcher({
         <SwitcherItem
           icon={<IconSquare />}
           href="/"
-          active={currentSelection === 'full-frame'}
+          active={currentSelection === 'square'}
           noPadding
         />
         <SwitcherItem
           icon={<IconFullFrame />}
           href={PATH_FULL}
-          active={currentSelection === 'grid'}
+          active={currentSelection === 'full-frame'}
           noPadding
         />
         <SwitcherItem
@@ -39,11 +41,12 @@ export default function ViewSwitcher({
           active={currentSelection === 'grid'}
           noPadding
         />
-        <SwitcherItem
-          icon={<BiLockAlt size={16} className="translate-y-[-0.5px]" />}
-          href={PATH_ADMIN_PHOTOS}
-          active={currentSelection === 'admin'}
-        />
+        {showAdmin &&
+          <SwitcherItem
+            icon={<BiLockAlt size={16} className="translate-y-[-0.5px]" />}
+            href={PATH_ADMIN_PHOTOS}
+            active={currentSelection === 'admin'}
+          />}
       </Switcher>
       <Switcher type="borderless">
         <SwitcherItem
