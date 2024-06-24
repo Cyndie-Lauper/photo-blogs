@@ -8,6 +8,7 @@ import { TAG_HIDDEN } from '@/tag';
 // Core paths
 export const PATH_ROOT                = '/';
 export const PATH_GRID                = '/grid';
+export const PATH_FULL                = '/full';
 export const PATH_ADMIN               = '/admin';
 export const PATH_API                 = '/api';
 export const PATH_SIGN_IN             = '/sign-in';
