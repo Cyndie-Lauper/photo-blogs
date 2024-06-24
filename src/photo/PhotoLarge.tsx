@@ -140,7 +140,7 @@ export default function PhotoLarge({
             </div>
             <div className="space-y-baseline">
               {photo.caption &&
-                <div className="uppercase">
+                <div className='normal-case'>
                   {photo.caption}
                 </div>}
               {(showCameraContent || showTagsContent) &&
