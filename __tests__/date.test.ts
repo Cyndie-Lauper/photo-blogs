@@ -37,6 +37,7 @@ describe('Date utility', () => {
         new Date().toISOString(),
       ));
   });
+  
   it('Empty string', () => {
     const timestamp = '             ';
     expect(convertTimestampWithOffsetToPostgresString(timestamp))
