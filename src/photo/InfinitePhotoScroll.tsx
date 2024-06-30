@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import useSwrInfinite from 'swr/infinite';
@@ -15,6 +16,7 @@ import { clsx } from 'clsx/lite';
 import { useAppState } from '@/state/AppState';
 import { Camera } from '@/camera';
 import { FilmSimulation } from '@/simulation';
+import { GetPhotosOptions } from './db';
 
 export type RevalidatePhoto = (
   photoId: string,
@@ -26,6 +28,7 @@ export default function InfinitePhotoScroll({
   initialOffset,
   itemsPerPage,
   tag,
+  sortBy,
   camera,
   simulation,
   wrapMoreButtonInGrid,
@@ -36,6 +39,7 @@ export default function InfinitePhotoScroll({
   initialOffset: number
   itemsPerPage: number
   tag?: string
+  sortBy?: GetPhotosOptions['sortBy']
   camera?: Camera
   simulation?: FilmSimulation
   cacheKey: string
@@ -59,25 +63,18 @@ export default function InfinitePhotoScroll({
     , [key]);
 
   const fetcher = useCallback(([_key, size]: [string, number]) =>
-    useCachedPhotos
-      ? getPhotosCachedAction({
-        offset: initialOffset + size * itemsPerPage,
-        limit: itemsPerPage,
-        hidden: includeHiddenPhotos ? 'include' : 'exclude',
-        tag,
-        camera,
-        simulation,
-      })
-      : getPhotosAction({
-        offset: initialOffset + size * itemsPerPage,
-        limit: itemsPerPage,
-        hidden: includeHiddenPhotos ? 'include' : 'exclude',
-        tag,
-        camera,
-        simulation,
-      })
+    (useCachedPhotos ? getPhotosCachedAction : getPhotosAction)({
+      offset: initialOffset + size * itemsPerPage,
+      sortBy,
+      limit: itemsPerPage,
+      hidden: includeHiddenPhotos ? 'include' : 'exclude',
+      tag,
+      camera,
+      simulation,
+    })
   , [
     useCachedPhotos,
+    sortBy,
     initialOffset,
     itemsPerPage,
     includeHiddenPhotos,
