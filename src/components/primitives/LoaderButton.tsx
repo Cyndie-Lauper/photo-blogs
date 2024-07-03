@@ -11,6 +11,7 @@ export default function LoaderButton(props: {
   styleAs?: 'button' | 'link' | 'link-without-hover'
   hideTextOnMobile?: boolean
   shouldPreventDefault?: boolean
+  primary?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const {
     children,
@@ -20,6 +21,7 @@ export default function LoaderButton(props: {
     styleAs = 'button',
     hideTextOnMobile = true,
     shouldPreventDefault,
+    primary,
     type = 'button',
     onClick,
     disabled,
@@ -45,6 +47,7 @@ export default function LoaderButton(props: {
         styleAs === 'link' && 'hover:text-dim',
         styleAs === 'link-without-hover' && 'hover:text-main',
         'inline-flex items-center gap-2 self-start whitespace-nowrap',
+        primary && 'primary',
         className,
       )}
       disabled={isLoading || disabled}
