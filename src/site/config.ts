@@ -135,8 +135,6 @@ export const PRIORITY_ORDER_ENABLED =
 export const PUBLIC_API_ENABLED =
   process.env.NEXT_PUBLIC_PUBLIC_API === '1';
 export const SHOW_REPO_LINK =
-  process.env.NEXT_PUBLIC_HIDE_REPO_LINK !== '1';
-export const SHOW_SOCIAL =
   process.env.NEXT_PUBLIC_HIDE_SOCIAL !== '1';
 export const SHOW_FILM_SIMULATIONS =
   process.env.NEXT_PUBLIC_HIDE_FILM_SIMULATIONS !== '1';
@@ -161,12 +159,8 @@ export const CONFIG_CHECKLIST_STATUS = {
   ),
   hasVercelKv: HAS_VERCEL_KV,
   hasVercelBlobStorage: HAS_VERCEL_BLOB_STORAGE,
-  hasCloudflareR2Storage: HAS_CLOUDFLARE_R2_STORAGE,
-  hasAwsS3Storage: HAS_AWS_S3_STORAGE,
   hasStorageProvider: (
-    HAS_VERCEL_BLOB_STORAGE ||
-    HAS_CLOUDFLARE_R2_STORAGE ||
-    HAS_AWS_S3_STORAGE
+    HAS_VERCEL_BLOB_STORAGE
   ),
   hasMultipleStorageProviders: HAS_MULTIPLE_STORAGE_PROVIDERS,
   currentStorage: CURRENT_STORAGE,
@@ -179,7 +173,6 @@ export const CONFIG_CHECKLIST_STATUS = {
   hasTitle: Boolean(process.env.NEXT_PUBLIC_SITE_TITLE),
   hasDescription: Boolean(process.env.NEXT_PUBLIC_SITE_DESCRIPTION),
   showRepoLink: SHOW_REPO_LINK,
-  showSocial: SHOW_SOCIAL,
   showFilmSimulations: SHOW_FILM_SIMULATIONS,
   showExifInfo: SHOW_EXIF_DATA,
   isProModeEnabled: PRO_MODE_ENABLED,
