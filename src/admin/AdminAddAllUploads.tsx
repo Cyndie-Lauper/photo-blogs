@@ -3,7 +3,6 @@
 import Container from '@/components/Container';
 import ErrorNote from '@/components/ErrorNote';
 import FieldSetWithStatus from '@/components/FieldSetWithStatus';
-import LoaderButton from '@/components/primitives/LoaderButton';
 import { addAllUploadsAction } from '@/photo/actions';
 import { PATH_ADMIN_PHOTOS } from '@/site/paths';
 import {
@@ -66,10 +65,6 @@ export default function AdminAddAllUploads({
           : `Adding ${addedUploadUrls.current.length} of ${storageUrls.length}`
         );
         setButtonSubheadText(data?.subhead ?? '');
-        setAddingProgress((
-          addedUploadUrls.current.length /
-          storageUrls.length
-        ) * 0.95);
         setAddedUploadUrls?.(current => {
           const urls = data?.addedUploadUrls.split(',') ?? [];
           const updatedUrls = current
@@ -77,6 +72,17 @@ export default function AdminAddAllUploads({
             .concat(urls);
           addedUploadUrls.current = updatedUrls;
           return updatedUrls;
+        });
+        setAddingProgress((current = 0) => {
+          const updatedProgress = (
+            (
+              ((addedUploadUrls.current.length || 1) - 1) +
+              (data?.progress ?? 0)
+            ) /
+            storageUrls.length
+          ) * 0.95;
+          // Prevent out-of-order updates causing progress to go backwards
+          return Math.max(current, updatedProgress);
         });
       }
     } catch (e: any) {
@@ -152,7 +158,7 @@ export default function AdminAddAllUploads({
                 // eslint-disable-next-line max-len
                 if (confirm(`Are you sure you want to add all ${storageUrls.length} uploads?`)) {
                   setIsAdding(true);
-                  let uploadsToAdd = storageUrls.slice();
+                  const uploadsToAdd = storageUrls.slice();
                   try {
                     while (uploadsToAdd.length > 0) {
                       await addUploadUrls(
