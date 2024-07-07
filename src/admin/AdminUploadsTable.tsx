@@ -4,7 +4,6 @@ import ImageSmall from '@/components/image/ImageSmall';
 import Spinner from '@/components/Spinner';
 import { getIdFromStorageUrl } from '@/services/storage';
 import { clsx } from 'clsx/lite';
-import { motion } from 'framer-motion';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { pathForAdminUploadUrl } from '@/site/paths';
 import AddButton from './AddButton';
@@ -25,29 +24,38 @@ export default function AdminUploadsTable({
 
   return (
     <div className="space-y-4">
-      {urlAddStatuses.map(({ url, status, statusMessage, uploadedAt }) => {
-        const addUploadPath = pathForAdminUploadUrl(url);
-        return <div key={url}>
+      {urlAddStatuses.map(({ url, status, statusMessage, uploadedAt }) =>
+        <div key={url}>
           <div className={clsx(
             'flex items-center gap-2 w-full min-h-8',
           )}>
-            <motion.div
-              className="flex items-center grow gap-2"
-              animate={isAdding
-                ? {
-                  opacity: status === 'adding' || isComplete ? 1 : 0.5,
-                  translateX: isComplete
-                    ? 0
-                    : status === 'adding' || isComplete ? -4 : 4,
-                }
-                : { opacity: 1, translateX: 0 }}
+            <div
+              className={clsx(
+                'flex items-center grow gap-2',
+                'transition-opacity',
+                isAdding && !isComplete && status !== 'adding' && 'opacity-40',
+              )}
             >
-              <ImageSmall
-                src={url}
-                alt={url}
-                aspectRatio={3.0 / 2.0}
-                className="rounded-[3px] overflow-hidden shrink-0"
-              />
+              <div className={clsx(
+                'shrink-0 transition-transform',
+                isAdding && !isComplete && status === 'adding' &&
+                  'translate-x-[-2px] scale-[1.15]',
+                isAdding && !isComplete && status !== 'adding'
+                  ? 'scale-90'
+                  : 'scale-100',
+              )}>
+                <ImageSmall
+                  src={url}
+                  alt={url}
+                  aspectRatio={3.0 / 2.0}
+                  className={clsx(
+                    'rounded-[3px] overflow-hidden',
+                    'border-subtle',
+                    isAdding && !isComplete && status === 'adding' &&
+                      'animate-hover-wobble shadow-lg',
+                  )}
+                />
+              </div>
               <span className="grow min-w-0">
                 <div className="overflow-hidden text-ellipsis">
                   {getIdFromStorageUrl(url)}
@@ -55,7 +63,7 @@ export default function AdminUploadsTable({
                 <div className="text-dim overflow-hidden text-ellipsis">
                   {isAdding || isComplete
                     ? status === 'added'
-                      ? 'Complete'
+                      ? 'Added'
                       : status === 'adding'
                         ? statusMessage ?? 'Adding ...'
                         : 'Waiting'
@@ -64,7 +72,7 @@ export default function AdminUploadsTable({
                       : '—'}
                 </div>
               </span>
-            </motion.div>
+            </div>
             <span className="flex items-center gap-2">
               {isAdding || isComplete
                 ? <>
@@ -80,7 +88,7 @@ export default function AdminUploadsTable({
                       </span>}
                 </>
                 : <>
-                  <AddButton path={addUploadPath} />
+                  <AddButton path={pathForAdminUploadUrl(url)} />
                   <FormWithConfirm
                     action={deleteBlobPhotoAction}
                     confirmText="Are you sure you want to delete this upload?"
@@ -102,8 +110,7 @@ export default function AdminUploadsTable({
                 </>}
             </span>
           </div>
-        </div>;
-      })}
+        </div>)}
     </div>
   );
 }
