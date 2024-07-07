@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { BiCheckCircle, BiImageAdd } from 'react-icons/bi';
 import ProgressButton from '@/components/primitives/ProgressButton';
-import { AddedUrlStatus } from './AdminUploadsClient';
+import { UrlAddStatus } from './AdminUploadsClient';
 
 const UPLOAD_BATCH_SIZE = 4;
 
@@ -30,13 +30,13 @@ export default function AdminAddAllUploads({
   uniqueTags,
   isAdding,
   setIsAdding,
-  setAddedUrlStatuses,
+  setUrlAddStatuses,
 }: {
   storageUrls: string[]
   uniqueTags?: TagsWithMeta
   isAdding: boolean
   setIsAdding: (isAdding: boolean) => void
-  setAddedUrlStatuses: Dispatch<SetStateAction<AddedUrlStatus[]>>
+  setUrlAddStatuses: Dispatch<SetStateAction<UrlAddStatus[]>>
 }) {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -65,15 +65,15 @@ export default function AdminAddAllUploads({
           ? `Adding 1 of ${storageUrls.length}`
           : `Adding ${addedUploadCount.current + 1} of ${storageUrls.length}`
         );
-        setAddedUrlStatuses(current => {
+        setUrlAddStatuses(current => {
           const update = current.map(status =>
             status.url === data?.url
               ? {
                 ...status,
                 // Prevent status regressions
-                status: status.status !== 'added' ? data.status : 'added',
-                statusMessage: data.statusMessage,
-                progress: data.progress,
+                status: status.status !== 'added' ? data?.status : 'added',
+                statusMessage: data?.statusMessage,
+                progress: data?.progress,
               }
               : status
           );
@@ -167,7 +167,7 @@ export default function AdminAddAllUploads({
                 // eslint-disable-next-line max-len
                 if (confirm(`Are you sure you want to add all ${storageUrls.length} uploads?`)) {
                   setIsAdding(true);
-                  setAddedUrlStatuses(current => current.map((url, index) =>
+                  setUrlAddStatuses(current => current.map((url, index) =>
                     index === 0 ? { ...url, status: 'adding' } : url
                   ));
                   const uploadsToAdd = storageUrls.slice();

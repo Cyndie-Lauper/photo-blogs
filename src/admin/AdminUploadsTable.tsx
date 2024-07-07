@@ -11,21 +11,21 @@ import AddButton from './AddButton';
 import FormWithConfirm from '@/components/FormWithConfirm';
 import { deleteBlobPhotoAction } from '@/photo/actions';
 import DeleteButton from './DeleteButton';
-import { AddedUrlStatus } from './AdminUploadsClient';
+import { UrlAddStatus } from './AdminUploadsClient';
 import ResponsiveDate from '@/components/ResponsiveDate';
 
 export default function AdminUploadsTable({
   isAdding,
-  urls,
+  urlAddStatuses,
 }: {
   isAdding?: boolean
-  urls: AddedUrlStatus[]
+  urlAddStatuses: UrlAddStatus[]
 }) {
-  const isComplete = urls.every(({ status }) => status === 'added');
+  const isComplete = urlAddStatuses.every(({ status }) => status === 'added');
 
   return (
     <div className="space-y-4">
-      {urls.map(({ url, status, statusMessage, uploadedAt }) => {
+      {urlAddStatuses.map(({ url, status, statusMessage, uploadedAt }) => {
         const addUploadPath = pathForAdminUploadUrl(url);
         return <div key={url}>
           <div className={clsx(
@@ -88,7 +88,7 @@ export default function AdminUploadsTable({
                     <input
                       type="hidden"
                       name="redirectToPhotos"
-                      value={urls.length < 2 ? 'true' : 'false'}
+                      value={urlAddStatuses.length < 2 ? 'true' : 'false'}
                       readOnly
                     />
                     <input
