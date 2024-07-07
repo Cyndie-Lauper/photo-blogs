@@ -14,6 +14,7 @@ import { StorageListResponse } from '@/services/storage';
 import { useState } from 'react';
 import { LiaBroomSolid } from 'react-icons/lia';
 
+
 export default function AdminPhotosClient({
   photos,
   photosCount,
@@ -58,15 +59,15 @@ export default function AdminPhotosClient({
               {photosCountOutdated}
             </PathLoaderButton>}
           </div>
-          {!isUploading && blobPhotoUrls.length > 0 &&
+          {blobPhotoUrls.length > 0 &&
             <div className={clsx(
               'border-b pb-6',
               'border-gray-200 dark:border-gray-700',
             )}>
-              <AdminUploadsTable
-                title={`Photo Blobs (${blobPhotoUrls.length})`}
-                urls={blobPhotoUrls}
-              />
+              <div className="font-bold">
+                Photo Blobs ({blobPhotoUrls.length})
+              </div>
+              <AdminUploadsTable urlAddStatuses={blobPhotoUrls} />
             </div>}
           {/* Use custom spacing to address gap/space-y compatibility quirks */}
           <div className="space-y-[6px] sm:space-y-[10px]">
