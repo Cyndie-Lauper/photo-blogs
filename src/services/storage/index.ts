@@ -35,6 +35,7 @@ import { screenForPPR } from '@/utility/prr';
 export const generateStorageId = () => generateNanoid(16);
 
 export type StorageListResponse = {
+  fileName: string
   url: string
   uploadedAt?: Date
 }[];
