@@ -41,7 +41,6 @@ export default function AdminAddAllUploads({
   const divRef = useRef<HTMLDivElement>(null);
 
   const [buttonText, setButtonText] = useState('Add All Uploads');
-  const [buttonSubheadText, setButtonSubheadText] = useState('');
   const [showTags, setShowTags] = useState(false);
   const [tags, setTags] = useState('');
   const [actionErrorMessage, setActionErrorMessage] = useState('');

@@ -10,22 +10,20 @@ import {
   AWS_S3_BASE_URL,
   awsS3Copy,
   awsS3Delete,
-  awsS3List,
+  // awsS3List,
   awsS3Put,
   isUrlFromAwsS3,
 } from './aws-s3';
 import {
   CURRENT_STORAGE,
-  HAS_AWS_S3_STORAGE,
   HAS_VERCEL_BLOB_STORAGE,
-  HAS_CLOUDFLARE_R2_STORAGE,
 } from '@/site/config';
 import { generateNanoid } from '@/utility/nanoid';
 import {
   CLOUDFLARE_R2_BASE_URL_PUBLIC,
   cloudflareR2Copy,
   cloudflareR2Delete,
-  cloudflareR2List,
+  // cloudflareR2List,
   cloudflareR2Put,
   isUrlFromCloudflareR2,
 } from './cloudflare-r2';
@@ -205,14 +203,14 @@ const getStorageUrlsForPrefix = async (prefix = '') => {
     urls.push(...await vercelBlobList(prefix)
       .catch(e => screenForPPR(e, [], 'vercel blob')));
   }
-  if (HAS_AWS_S3_STORAGE) {
-    urls.push(...await awsS3List(prefix)
-      .catch(e => screenForPPR(e, [], 'aws blob')));
-  }
-  if (HAS_CLOUDFLARE_R2_STORAGE) {
-    urls.push(...await cloudflareR2List(prefix)
-      .catch(e => screenForPPR(e, [], 'cloudflare blob')));
-  }
+  // if (HAS_AWS_S3_STORAGE) {
+  //   urls.push(...await awsS3List(prefix)
+  //     .catch(e => screenForPPR(e, [], 'aws blob')));
+  // }
+  // if (HAS_CLOUDFLARE_R2_STORAGE) {
+  //   urls.push(...await cloudflareR2List(prefix)
+  //     .catch(e => screenForPPR(e, [], 'cloudflare blob')));
+  // }
 
   return urls
     .sort((a, b) => {

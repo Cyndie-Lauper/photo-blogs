@@ -1,11 +1,10 @@
 import {
   S3Client,
-  ListObjectsCommand,
   PutObjectCommand,
   DeleteObjectCommand,
   CopyObjectCommand,
 } from '@aws-sdk/client-s3';
-import { StorageListResponse, generateStorageId } from '.';
+import { generateStorageId } from '.';
 
 const CLOUDFLARE_R2_BUCKET =
   process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BUCKET ?? '';
@@ -82,17 +81,17 @@ export const cloudflareR2Copy = async (
     .then(() => urlForKey(fileNameDestination));
 };
 
-export const cloudflareR2List = async (
-  Prefix: string,
-): Promise<StorageListResponse> =>
-  cloudflareR2Client().send(new ListObjectsCommand({
-    Bucket: CLOUDFLARE_R2_BUCKET,
-    Prefix,
-  }))
-    .then((data) => data.Contents?.map(({ Key, LastModified }) => ({
-      url: urlForKey(Key),
-      uploadedAt: LastModified,
-    })) ?? []);
+// export const cloudflareR2List = async (
+//   Prefix: string,
+// ): Promise<StorageListResponse> =>
+//   cloudflareR2Client().send(new ListObjectsCommand({
+//     Bucket: CLOUDFLARE_R2_BUCKET,
+//     Prefix,
+//   }))
+//     .then((data) => data.Contents?.map(({ Key, LastModified }) => ({
+//       url: urlForKey(Key),
+//       uploadedAt: LastModified,
+//     })) ?? []);
 
 export const cloudflareR2Delete = async (Key: string) => {
   cloudflareR2Client().send(new DeleteObjectCommand({

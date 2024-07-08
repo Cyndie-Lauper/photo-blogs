@@ -2,10 +2,9 @@ import {
   S3Client,
   CopyObjectCommand,
   DeleteObjectCommand,
-  ListObjectsCommand,
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
-import { StorageListResponse, generateStorageId } from '.';
+import { generateStorageId } from '.';
 
 const AWS_S3_BUCKET = process.env.NEXT_PUBLIC_AWS_S3_BUCKET ?? '';
 const AWS_S3_REGION = process.env.NEXT_PUBLIC_AWS_S3_REGION ?? '';
@@ -63,17 +62,17 @@ export const awsS3Copy = async (
     .then(() => urlForKey(fileNameDestination));
 };
 
-export const awsS3List = async (
-  Prefix: string,
-): Promise<StorageListResponse> =>
-  awsS3Client().send(new ListObjectsCommand({
-    Bucket: AWS_S3_BUCKET,
-    Prefix,
-  }))
-    .then((data) => data.Contents?.map(({ Key, LastModified }) => ({
-      url: urlForKey(Key),
-      uploadedAt: LastModified,
-    })) ?? []);
+// export const awsS3List = async (
+//   Prefix: string,
+// ): Promise<StorageListResponse> =>
+//   awsS3Client().send(new ListObjectsCommand({
+//     Bucket: AWS_S3_BUCKET,
+//     Prefix,
+//   }))
+//     .then((data) => data.Contents?.map(({ Key, LastModified }) => ({
+//       url: urlForKey(Key),
+//       uploadedAt: LastModified,
+//     })) ?? []);
 
 export const awsS3Delete = async (Key: string) => {
   awsS3Client().send(new DeleteObjectCommand({
