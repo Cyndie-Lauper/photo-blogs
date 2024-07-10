@@ -3,12 +3,10 @@ import type { StorageType } from '@/services/storage';
 import { makeUrlAbsolute, shortenUrl } from '@/utility/url';
 
 // HARD-CODED GLOBAL CONFIGURATION
-
 export const SHOULD_PREFETCH_ALL_LINKS: boolean | undefined = undefined;
 export const SHOULD_DEBUG_SQL = false;
 
 // META / SOURCE / DOMAINS
-
 export const SITE_TITLE =
   process.env.NEXT_PUBLIC_SITE_TITLE ||
   'Photo Blog';
@@ -113,9 +111,10 @@ export const CURRENT_STORAGE: StorageType =
   );
 
 // SETTINGS
-
 export const PRO_MODE_ENABLED =
   process.env.NEXT_PUBLIC_PRO_MODE === '1';
+export const SHOW_GRID_FIRST =
+  process.env.NEXT_PUBLIC_SHOW_GRID_FIRST === '1';
 export const STATICALLY_OPTIMIZED_PAGES =
   process.env.NEXT_PUBLIC_STATICALLY_OPTIMIZE_PAGES === '1';
 export const STATICALLY_OPTIMIZED_OG_IMAGES =
@@ -149,8 +148,6 @@ export const GRID_ASPECT_RATIO =
 export const OG_TEXT_BOTTOM_ALIGNMENT =
   (process.env.NEXT_PUBLIC_OG_TEXT_ALIGNMENT ?? '').toUpperCase() === 'BOTTOM';
 export const ADMIN_DEBUG_TOOLS_ENABLED = process.env.ADMIN_DEBUG_TOOLS === '1';
-export const SHOW_GRID_FIRST =
-  process.env.NEXT_PUBLIC_SHOW_GRID_FIRST === '1';
 
 export const HIGH_DENSITY_GRID = GRID_ASPECT_RATIO <= 1;
 
@@ -181,6 +178,7 @@ export const CONFIG_CHECKLIST_STATUS = {
   showFilmSimulations: SHOW_FILM_SIMULATIONS,
   showExifInfo: SHOW_EXIF_DATA,
   isProModeEnabled: PRO_MODE_ENABLED,
+  isGridFirst: SHOW_GRID_FIRST,
   isStaticallyOptimized: (
     STATICALLY_OPTIMIZED_PAGES ||
     STATICALLY_OPTIMIZED_OG_IMAGES
@@ -204,7 +202,6 @@ export const CONFIG_CHECKLIST_STATUS = {
   gridAspectRatio: GRID_ASPECT_RATIO,
   hasGridAspectRatio: Boolean(process.env.NEXT_PUBLIC_GRID_ASPECT_RATIO),
   baseUrl: BASE_URL,
-  isGridFirst: SHOW_GRID_FIRST,
   commitMessage: VERCEL_COMMIT_MESSAGE,
   commitSha: VERCEL_COMMIT_SHA ? VERCEL_COMMIT_SHA.slice(0, 7) : undefined,
 };
