@@ -16,6 +16,7 @@ import {
 import AnimateItems from '../components/AnimateItems';
 import { useAppState } from '@/state/AppState';
 import ThemeSwitcherNav from './ThemeSwitcherNav';
+import { GRID_HOMEPAGE_ENABLED } from './config';
 
 export default function Nav({
   siteDomainOrTitle,
@@ -38,7 +39,7 @@ export default function Nav({
 
   const switcherSelectionForPath = (): SwitcherSelection | undefined => {
     if (pathname === PATH_ROOT) {
-      return 'feed';
+      return GRID_HOMEPAGE_ENABLED ? 'grid' : 'feed';
     } else if (isPathFullFrame(pathname)) {
       return 'full-frame';
     } else if (isPathGrid(pathname)) {

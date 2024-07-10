@@ -3,11 +3,18 @@ import Switcher from '@/components/Switcher';
 import SwitcherItem from '@/components/SwitcherItem';
 import IconFullFrame from '@/site/IconFullFrame';
 import IconGrid from '@/site/IconGrid';
-import { PATH_ADMIN_PHOTOS, PATH_FULL, PATH_GRID } from '@/site/paths';
+import {
+  PATH_ADMIN_PHOTOS,
+  PATH_FEED,
+  PATH_GRID,
+  PATH_ROOT,
+  PATH_FULL
+} from '@/site/paths';
 import { BiLockAlt } from 'react-icons/bi';
 import IconSearch from './IconSearch';
 import { useAppState } from '@/state/AppState';
 import IconFeed from './IconFeed';
+import { GRID_HOMEPAGE_ENABLED } from './config';
 
 export type SwitcherSelection = 'feed' | 'full-frame' | 'grid' | 'admin' ;
 
@@ -20,25 +27,31 @@ export default function ViewSwitcher({
 }) {
   const { setIsCommandKOpen } = useAppState();
 
+  const renderItemFeed = () =>
+    <SwitcherItem
+      icon={<IconFeed />}
+      href={GRID_HOMEPAGE_ENABLED ? PATH_FEED : PATH_ROOT}
+      active={currentSelection === 'feed'}
+      noPadding
+    />;
+
+  const renderItemGrid = () =>
+    <SwitcherItem
+      icon={<IconGrid />}
+      href={GRID_HOMEPAGE_ENABLED ? PATH_ROOT : PATH_GRID}
+      active={currentSelection === 'grid'}
+      noPadding
+    />;
+
   return (
     <div className="flex gap-1 sm:gap-2">
       <Switcher>
-        <SwitcherItem
-          icon={<IconFeed />}
-          href="/"
-          active={currentSelection === 'feed'}
-          noPadding
-        />
+        {GRID_HOMEPAGE_ENABLED ? renderItemGrid() : renderItemFeed()}
+        {GRID_HOMEPAGE_ENABLED ? renderItemFeed() : renderItemGrid()}
         <SwitcherItem
           icon={<IconFullFrame />}
           href={PATH_FULL}
           active={currentSelection === 'full-frame'}
-          noPadding
-        />
-        <SwitcherItem
-          icon={<IconGrid />}
-          href={PATH_GRID}
-          active={currentSelection === 'grid'}
           noPadding
         />
         {showAdmin &&

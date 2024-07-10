@@ -51,7 +51,7 @@ export default function SiteChecklistClient({
   areOGImagesStaticallyOptimized,
   arePhotosMatted,
   isBlurEnabled,
-  isGridFirst,
+  isGridHomepageEnabled: isGridFirst,
   isGeoPrivacyEnabled,
   isPriorityOrderEnabled,
   isAiTextGenerationEnabled,
@@ -409,7 +409,7 @@ export default function SiteChecklistClient({
             >
               Set environment variable to {'"1"'} to show grid layout
               on homepage:
-              {renderEnvVars(['NEXT_PUBLIC_SHOW_GRID_FIRST'])}
+              {renderEnvVars(['NEXT_PUBLIC_GRID_HOMEPAGE'])}
             </ChecklistRow>
             <ChecklistRow
               title="Static optimization"
