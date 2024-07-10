@@ -7,9 +7,9 @@ import { PATH_ADMIN_PHOTOS, PATH_FULL, PATH_GRID } from '@/site/paths';
 import { BiLockAlt } from 'react-icons/bi';
 import IconSearch from './IconSearch';
 import { useAppState } from '@/state/AppState';
-import IconSquare from './IconSquare';
+import IconFeed from './IconFeed';
 
-export type SwitcherSelection = 'square' | 'full-frame' | 'grid' | 'admin' ;
+export type SwitcherSelection = 'feed' | 'full-frame' | 'grid' | 'admin' ;
 
 export default function ViewSwitcher({
   currentSelection,
@@ -24,9 +24,9 @@ export default function ViewSwitcher({
     <div className="flex gap-1 sm:gap-2">
       <Switcher>
         <SwitcherItem
-          icon={<IconSquare />}
+          icon={<IconFeed />}
           href="/"
-          active={currentSelection === 'square'}
+          active={currentSelection === 'feed'}
           noPadding
         />
         <SwitcherItem

@@ -6,7 +6,7 @@ import FieldSetWithStatus from '@/components/FieldSetWithStatus';
 import { addAllUploadsAction } from '@/photo/actions';
 import { PATH_ADMIN_PHOTOS } from '@/site/paths';
 import {
-  TagsWithMeta,
+  Tags,
   convertTagsForForm,
   getValidationMessageForTags,
 } from '@/tag';
@@ -33,7 +33,7 @@ export default function AdminAddAllUploads({
   setUrlAddStatuses,
 }: {
   storageUrls: string[]
-  uniqueTags?: TagsWithMeta
+  uniqueTags?: Tags
   isAdding: boolean
   setIsAdding: (isAdding: boolean) => void
   setUrlAddStatuses: Dispatch<SetStateAction<UrlAddStatus[]>>

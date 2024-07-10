@@ -38,7 +38,7 @@ export default function Nav({
 
   const switcherSelectionForPath = (): SwitcherSelection | undefined => {
     if (pathname === PATH_ROOT) {
-      return 'square';
+      return 'feed';
     } else if (isPathFullFrame(pathname)) {
       return 'full-frame';
     } else if (isPathGrid(pathname)) {

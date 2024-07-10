@@ -6,7 +6,7 @@ import { PATH_ADMIN_PHOTOS } from '@/site/paths';
 import { PhotoFormData, convertPhotoToFormData } from './form';
 import PhotoForm from './form/PhotoForm';
 import ExifSyncButton from '@/admin/ExifSyncButton';
-import { TagsWithMeta } from '@/tag';
+import { Tags } from '@/tag';
 import AiButton from './ai/AiButton';
 import usePhotoFormParent from './form/usePhotoFormParent';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export default function PhotoEditPageClient({
   blurData,
 }: {
   photo: Photo
-  uniqueTags: TagsWithMeta
+  uniqueTags: Tags
   hasAiTextGeneration: boolean
   imageThumbnailBase64: string
   blurData: string

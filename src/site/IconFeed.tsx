@@ -3,7 +3,7 @@
 const INTRINSIC_WIDTH = 28;
 const INTRINSIC_HEIGHT = 24;
 
-export default function IconSquare({
+export default function IconFeed({
   width = INTRINSIC_WIDTH,
   includeTitle = true,
 }: {
@@ -22,7 +22,7 @@ export default function IconSquare({
       strokeLinejoin="round"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {includeTitle && <title>Square</title>}
+      {includeTitle && <title>Feed</title>}
       <rect x="9" y="6.625" width="11" height="11" rx="1" ry="1" strokeWidth="1.25"/>
     </svg>
   );

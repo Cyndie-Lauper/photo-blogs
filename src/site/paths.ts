@@ -9,6 +9,7 @@ import { TAG_HIDDEN } from '@/tag';
 export const PATH_ROOT                = '/';
 export const PATH_GRID                = '/grid';
 export const PATH_FULL                = '/full';
+export const PATH_FEED                = '/feed';
 export const PATH_ADMIN               = '/admin';
 export const PATH_API                 = '/api';
 export const PATH_SIGN_IN             = '/sign-in';
@@ -38,8 +39,8 @@ export const PATH_ADMIN_CONFIGURATION = `${PATH_ADMIN}/configuration`;
 export const PATH_ADMIN_BASELINE      = `${PATH_ADMIN}/baseline`;
 
 // Debug paths
-export const PATH_OG_ALL         = `${PATH_OG}/all`;
-export const PATH_OG_SAMPLE         = `${PATH_OG}/sample`;
+export const PATH_OG_ALL              = `${PATH_OG}/all`;
+export const PATH_OG_SAMPLE           = `${PATH_OG}/sample`;
 
 // API paths
 export const PATH_API_STORAGE = `${PATH_API}/storage`;
@@ -62,6 +63,7 @@ export const PATHS_TO_CACHE = [
   PATH_ROOT,
   PATH_GRID,
   PATH_OG,
+  PATH_FEED,
   PATH_PHOTO_DYNAMIC,
   PATH_TAG_DYNAMIC,
   PATH_CAMERA_DYNAMIC,
@@ -253,6 +255,9 @@ export const checkPathPrefix = (pathname = '', prefix: string) =>
 export const isPathGrid = (pathname?: string) =>
   checkPathPrefix(pathname, PATH_GRID);
 
+export const isPathFeed = (pathname?: string) =>
+  checkPathPrefix(pathname, PATH_FEED);
+
 export const isPathFullFrame = (pathname?: string) =>
   checkPathPrefix(pathname, PATH_FULL);
 
@@ -338,7 +343,7 @@ export const getEscapePath = (pathname?: string) => {
     (simulation && isPathFilmSimulation(pathname)) ||
     (focal && isPathFocalLength(pathname))
   ) {
-    return PATH_GRID;
+    return PATH_ROOT;
   } else if (photoId && isPathTagPhotoShare(pathname)) {
     return pathForPhoto({ photo: photoId, tag });
   } else if (photoId && isPathCameraPhotoShare(pathname)) {

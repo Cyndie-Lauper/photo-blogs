@@ -149,6 +149,8 @@ export const GRID_ASPECT_RATIO =
 export const OG_TEXT_BOTTOM_ALIGNMENT =
   (process.env.NEXT_PUBLIC_OG_TEXT_ALIGNMENT ?? '').toUpperCase() === 'BOTTOM';
 export const ADMIN_DEBUG_TOOLS_ENABLED = process.env.ADMIN_DEBUG_TOOLS === '1';
+export const SHOW_GRID_FIRST =
+  process.env.NEXT_PUBLIC_SHOW_GRID_FIRST === '1';
 
 export const HIGH_DENSITY_GRID = GRID_ASPECT_RATIO <= 1;
 
@@ -202,6 +204,7 @@ export const CONFIG_CHECKLIST_STATUS = {
   gridAspectRatio: GRID_ASPECT_RATIO,
   hasGridAspectRatio: Boolean(process.env.NEXT_PUBLIC_GRID_ASPECT_RATIO),
   baseUrl: BASE_URL,
+  isGridFirst: SHOW_GRID_FIRST,
   commitMessage: VERCEL_COMMIT_MESSAGE,
   commitSha: VERCEL_COMMIT_SHA ? VERCEL_COMMIT_SHA.slice(0, 7) : undefined,
 };
