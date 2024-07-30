@@ -4,7 +4,7 @@ import MoreMenu from '@/components/more/MoreMenu';
 import { PATH_ADMIN_CONFIGURATION } from '@/site/paths';
 import { useAppState } from '@/state/AppState';
 import { BiCog } from 'react-icons/bi';
-import { FaTimes } from 'react-icons/fa';
+import { IoCloseSharp } from 'react-icons/io5';
 import { ImCheckboxUnchecked } from 'react-icons/im';
 
 export default function AdminAppMenu() {
@@ -26,11 +26,11 @@ export default function AdminAppMenu() {
           ? 'Exit Select'
           : 'Select Multiple',
         icon: isSelecting
-          ? <FaTimes
-            className="translate-y-[1px]"
+          ? <IoCloseSharp
+            className="text-[18px] translate-y-[-0.5px]"
           />
           : <ImCheckboxUnchecked
-            className="text-[0.75rem] translate-y-[2px]"
+            className="text-[0.75rem]"
           />,
         action: () => {
           if (isSelecting) {
