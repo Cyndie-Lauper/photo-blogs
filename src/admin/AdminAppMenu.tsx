@@ -1,7 +1,7 @@
 'use client';
 
 import MoreMenu from '@/components/more/MoreMenu';
-import { PATH_ADMIN_CONFIGURATION } from '@/site/paths';
+import { PATH_ADMIN_CONFIGURATION, PATH_GRID_INFERRED } from '@/site/paths';
 import { useAppState } from '@/state/AppState';
 import { BiCog } from 'react-icons/bi';
 import { IoCloseSharp } from 'react-icons/io5';
@@ -32,6 +32,7 @@ export default function AdminAppMenu() {
           : <ImCheckboxUnchecked
             className="text-[0.75rem]"
           />,
+        href: PATH_GRID_INFERRED,
         action: () => {
           if (isSelecting) {
             setSelectedPhotoIds?.(undefined);

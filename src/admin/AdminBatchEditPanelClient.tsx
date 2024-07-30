@@ -10,12 +10,15 @@ import DeleteButton from './DeleteButton';
 import { useState } from 'react';
 import TagInput from '@/components/TagInput';
 import { convertTagsForForm, TagsWithMeta } from '@/tag';
+import { usePathname } from 'next/navigation';
+import { PATH_GRID_INFERRED } from '@/site/paths';
 
 export default function AdminBatchEditPanelClient({
   existingTags,
 }: {
   existingTags: TagsWithMeta
 }) {
+  const pathname = usePathname();
   const {
     isUserSignedIn,
     selectedPhotoIds,
@@ -62,8 +65,11 @@ export default function AdminBatchEditPanelClient({
       />
     </>;
 
-  return isUserSignedIn && selectedPhotoIds !== undefined
-    ? <SiteGrid
+  return (
+    isUserSignedIn &&
+    pathname === PATH_GRID_INFERRED &&
+    selectedPhotoIds !== undefined
+  ) ? <SiteGrid
       className="sticky top-0 z-10 mb-5 -mt-2 pt-2"
       contentMain={<Note
         color="gray"
