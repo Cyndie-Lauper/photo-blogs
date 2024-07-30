@@ -11,6 +11,7 @@ export default function LoaderButton(props: {
   styleAs?: 'button' | 'link' | 'link-without-hover'
   hideTextOnMobile?: boolean
   shouldPreventDefault?: boolean
+  confirmText?: string
   primary?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const {
@@ -21,6 +22,7 @@ export default function LoaderButton(props: {
     styleAs = 'button',
     hideTextOnMobile = true,
     shouldPreventDefault,
+    confirmText,
     primary,
     type = 'button',
     onClick,
@@ -35,7 +37,9 @@ export default function LoaderButton(props: {
       type={type}
       onClick={e => {
         if (shouldPreventDefault) { e.preventDefault(); }
-        onClick?.(e);
+        if (!confirmText || confirm(confirmText)) {
+          onClick?.(e);
+        }
       }}
       className={clsx(
         ...(styleAs !== 'button'
