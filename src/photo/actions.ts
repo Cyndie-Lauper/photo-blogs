@@ -215,6 +215,17 @@ export const tagMultiplePhotosAction = (
     );
     revalidateAllKeysAndPaths();
   });
+
+export const deletePhotosAction = async (photoIds: string[]) =>
+  runAuthenticatedAdminServerAction(async () => {
+    for (const photoId of photoIds) {
+      const photo = await getPhoto(photoId);
+      if (photo) {
+        await deletePhoto(photoId).then(() => deleteFile(photo.url));
+      }
+    }
+    revalidateAllKeysAndPaths();
+  });
   
 export const toggleFavoritePhotoAction = async (
   photoId: string,

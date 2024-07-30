@@ -6,7 +6,6 @@ import SiteGrid from '@/components/SiteGrid';
 import { useAppState } from '@/state/AppState';
 import { clsx } from 'clsx/lite';
 import { IoCloseSharp } from 'react-icons/io5';
-import DeleteButton from './DeleteButton';
 import { useState } from 'react';
 import { TagsWithMeta } from '@/tag';
 import { usePathname } from 'next/navigation';
@@ -15,6 +14,7 @@ import PhotoTagFieldset from './PhotoTagFieldset';
 import { tagMultiplePhotosAction } from '@/photo/actions';
 import { toastSuccess } from '@/toast';
 import { set } from 'date-fns';
+import DeletePhotosButton from './DeletePhotosButton';
 
 export default function AdminBatchEditPanelClient({
   uniqueTags,
@@ -89,7 +89,11 @@ export default function AdminBatchEditPanelClient({
             <LoaderButton onClick={() => setTags('')} isLoading={isLoading}>
               Tag ...
             </LoaderButton>
-            <DeleteButton disabled={isLoading} />
+            <DeletePhotosButton 
+              disabled={isLoading}
+              photoIds={selectedPhotoIds}
+              onDelete={resetForm}
+            />
           </>
         )}
         <LoaderButton
