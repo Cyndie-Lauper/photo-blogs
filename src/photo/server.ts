@@ -110,6 +110,7 @@ const generateBase64 = async (
   middleware: (sharp: Sharp) => Sharp,
 ) => 
   middleware(sharp(image))
+    .withMetadata()
     .toFormat('jpeg', { quality: 90 })
     .toBuffer()
     .then(data => `data:image/jpeg;base64,${data.toString('base64')}`);
