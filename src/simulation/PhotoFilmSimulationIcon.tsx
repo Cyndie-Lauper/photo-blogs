@@ -21,6 +21,7 @@ export default function PhotoFilmSimulationIcon({
     <svg
       className={className}
       style={style}
+      // eslint-disable-next-line jsx-a11y/aria-props
       aria-description={simulation
         ? labelForFilmSimulation(simulation).large
         : 'Film Simulation'}
