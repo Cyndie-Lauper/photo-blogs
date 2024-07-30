@@ -5,11 +5,8 @@ import ErrorNote from '@/components/ErrorNote';
 import FieldSetWithStatus from '@/components/FieldSetWithStatus';
 import { addAllUploadsAction } from '@/photo/actions';
 import { PATH_ADMIN_PHOTOS } from '@/site/paths';
-import {
-  TagsWithMeta,
-  convertTagsForForm,
-  getValidationMessageForTags,
-} from '@/tag';
+import { TagsWithMeta } from '@/tag';
+
 import {
   generateLocalNaivePostgresString,
   generateLocalPostgresString,
@@ -22,6 +19,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { BiCheckCircle, BiImageAdd } from 'react-icons/bi';
 import ProgressButton from '@/components/primitives/ProgressButton';
 import { UrlAddStatus } from './AdminUploadsClient';
+import PhotoTagFieldset from './PhotoTagFieldset';
 
 const UPLOAD_BATCH_SIZE = 4;
 
@@ -38,7 +36,6 @@ export default function AdminAddAllUploads({
   setIsAdding: (isAdding: boolean) => void
   setUrlAddStatuses: Dispatch<SetStateAction<UrlAddStatus[]>>
 }) {
-  const divRef = useRef<HTMLDivElement>(null);
 
   const [buttonText, setButtonText] = useState('Add All Uploads');
   const [showTags, setShowTags] = useState(false);
@@ -121,36 +118,20 @@ export default function AdminAddAllUploads({
               label="Apply tags"
               type="checkbox"
               value={showTags ? 'true' : 'false'}
-              onChange={value => {
-                setShowTags(value === 'true');
-                if (value === 'true') {
-                  setTimeout(() =>
-                    divRef.current?.querySelectorAll('input')[0]?.focus()
-                  , 100);
-                }
-              }}
+              onChange={value => setShowTags(value === 'true')}
               readOnly={isAdding}
             />
           </div>
-          <div
-            ref={divRef}
-            className={showTags && !actionErrorMessage ? undefined : 'hidden'}
-          >
-            <FieldSetWithStatus
-              id="tags"
-              label="Optional Tags"
-              tagOptions={convertTagsForForm(uniqueTags)}
-              value={tags}
-              onChange={tags => {
-                setTags(tags);
-                setTagErrorMessage(getValidationMessageForTags(tags) ?? '');
-              }}
+          {showTags && !actionErrorMessage &&
+            <PhotoTagFieldset
+              tags={tags}
+              tagOptions={uniqueTags}
+              onChange={setTags}
+              onError={setTagErrorMessage}
               readOnly={isAdding}
-              error={tagErrorMessage}
-              required={false}
+              openOnLoad
               hideLabel
-            />
-          </div>
+            />}
           <div className="space-y-2">
             <ProgressButton
               primary
