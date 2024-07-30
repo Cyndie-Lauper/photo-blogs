@@ -12,6 +12,7 @@ import { TagsWithMeta } from '@/tag';
 import { usePathname } from 'next/navigation';
 import { PATH_GRID_INFERRED } from '@/site/paths';
 import PhotoTagFieldset from './PhotoTagFieldset';
+import { tagMultiplePhotosAction } from '@/photo/actions';
 
 export default function AdminBatchEditPanelClient({
   uniqueTags,
@@ -25,6 +26,7 @@ export default function AdminBatchEditPanelClient({
     setSelectedPhotoIds,
   } = useAppState();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState<string>();
   const [tagErrorMessage, setTagErrorMessage] = useState('');
   const isTagging = tags !== undefined;
@@ -43,6 +45,7 @@ export default function AdminBatchEditPanelClient({
           setTags(undefined);
           setTagErrorMessage('');
         }}
+        disabled={isLoading}
       >
         Cancel
       </LoaderButton>
@@ -50,7 +53,15 @@ export default function AdminBatchEditPanelClient({
         className="min-h-[2.5rem]"
         // eslint-disable-next-line max-len
         confirmText={`Are you sure you want to apply tags to ${selectedPhotoIds?.length} ${photosPlural}? This action cannot be undone.`}
-        disabled={!tags || Boolean(tagErrorMessage)}
+        onClick={() => {
+          setIsLoading(true);
+          tagMultiplePhotosAction(
+            tags,
+            selectedPhotoIds ?? [],
+          )
+            .finally(() => setIsLoading(false));
+        }}
+        disabled={!tags || Boolean(tagErrorMessage) || isLoading}
         primary
       >
         Apply Tags
@@ -59,10 +70,13 @@ export default function AdminBatchEditPanelClient({
     : <>
       {(selectedPhotoIds?.length ?? 0) > 0 &&
         <>
-          <LoaderButton onClick={() => setTags('')}>
+          <LoaderButton
+            onClick={() => setTags('')}
+            isLoading={isLoading}
+          >
             Tag ...
           </LoaderButton>
-          <DeleteButton />
+          <DeleteButton disabled={isLoading} />
         </>}
       <LoaderButton
         icon={<IoCloseSharp size={20} className="translate-y-[-1.5px]" />}

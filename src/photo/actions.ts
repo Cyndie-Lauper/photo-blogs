@@ -8,6 +8,7 @@ import {
   renamePhotoTagGlobally,
   getPhoto,
   getPhotos,
+  addTagsToPhotos,
 } from '@/photo/db/query';
 import { GetPhotosOptions, areOptionsSensitive } from './db';
 import {
@@ -47,9 +48,9 @@ import { generateAiImageQueries } from './ai/server';
 import { createStreamableValue } from 'ai/rsc';
 import { convertUploadToPhoto } from './storage';
 import { UrlAddStatus } from '@/admin/AdminUploadsClient';
+import { convertStringToArray } from '@/utility/string';
 
 // Private actions
-
 export const createPhotoAction = async (formData: FormData) =>
   runAuthenticatedAdminServerAction(async () => {
     const shouldStripGpsData = formData.get('shouldStripGpsData') === 'true';
@@ -203,6 +204,18 @@ export const updatePhotoAction = async (formData: FormData) =>
     redirect(PATH_ADMIN_PHOTOS);
   });
 
+export const tagMultiplePhotosAction = (
+  tags: string,
+  photoIds: string[],
+) =>
+  runAuthenticatedAdminServerAction(async () => {
+    await addTagsToPhotos(
+      convertStringToArray(tags, false) ?? [],
+      photoIds,
+    );
+    revalidateAllKeysAndPaths();
+  });
+  
 export const toggleFavoritePhotoAction = async (
   photoId: string,
   shouldRedirect?: boolean,
