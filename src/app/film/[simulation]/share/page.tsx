@@ -56,11 +56,16 @@ export default async function Share({
     { count, dateRange },
   ] = await getPhotosFilmSimulationDataCachedCached(simulation);
 
-  return <>
-    <FilmSimulationShareModal {...{ simulation, photos, count, dateRange }} />
-    <FilmSimulationOverview
-      {...{ simulation, photos, count, dateRange }}
-      animateOnFirstLoadOnly
-    />
-  </>;
+  return (
+    <>
+      <FilmSimulationShareModal {...{ simulation, photos, count, dateRange }} />
+      <FilmSimulationOverview
+        tags={[]}
+        cameras={[]}
+        simulations={[]}
+        {...{ simulation, photos, count, dateRange }}
+        animateOnFirstLoadOnly
+      />
+    </>
+  );
 }

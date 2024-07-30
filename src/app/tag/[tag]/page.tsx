@@ -63,6 +63,11 @@ export default async function TagPage({
   if (photos.length === 0) { redirect(PATH_ROOT); }
 
   return (
-    <TagOverview {...{ tag, photos, count, dateRange }} />
+    <TagOverview
+      tags={[]}
+      cameras={[]}
+      simulations={[]}
+      {...{ tag, photos, count, dateRange }}
+    />
   );
 }

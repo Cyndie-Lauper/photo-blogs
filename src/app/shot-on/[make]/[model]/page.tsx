@@ -58,6 +58,11 @@ export default async function CameraPage({
   ] = await getPhotosCameraDataCachedCached(make, model);
 
   return (
-    <CameraOverview {...{ camera, photos, count, dateRange }} />
+    <CameraOverview
+      tags={[]}
+      cameras={[]}
+      simulations={[]}
+      {...{ camera, photos, count, dateRange }}
+    />
   );
 }

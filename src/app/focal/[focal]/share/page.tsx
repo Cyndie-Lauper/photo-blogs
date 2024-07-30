@@ -60,11 +60,16 @@ export default async function Share({
     { count, dateRange },
   ] = await getPhotosFocalLengthDataCachedCached(focal);
 
-  return <>
-    <FocalLengthShareModal {...{ focal, photos, count, dateRange }} />
-    <FocalLengthOverview
-      {...{ focal, photos, count, dateRange }}
-      animateOnFirstLoadOnly
-    />
-  </>;
+  return (
+    <>
+      <FocalLengthShareModal {...{ focal, photos, count, dateRange }} />
+      <FocalLengthOverview
+        tags={[]}
+        cameras={[]}
+        simulations={[]}
+        {...{ focal, photos, count, dateRange }}
+        animateOnFirstLoadOnly
+      />
+    </>
+  );
 }

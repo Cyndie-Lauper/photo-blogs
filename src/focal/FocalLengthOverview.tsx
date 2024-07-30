@@ -1,6 +1,9 @@
 import { Photo, PhotoDateRange } from '@/photo';
-import PhotoGridPage from '@/photo/PhotoGridPage';
 import FocalLengthHeader from './FocalLengthHeader';
+import { Cameras } from '@/camera';
+import PhotoGridContainer from '@/photo/PhotoGridContainer';
+import { FilmSimulations } from '@/simulation';
+import { TagsWithMeta } from '@/tag';
 
 
 export default function FocalLengthOverview({
@@ -9,20 +12,28 @@ export default function FocalLengthOverview({
   count,
   dateRange,
   animateOnFirstLoadOnly,
+  tags,
+  cameras,
+  simulations,
 }: {
   focal: number,
   photos: Photo[],
   count: number,
   dateRange?: PhotoDateRange,
   animateOnFirstLoadOnly?: boolean,
-
+  tags: TagsWithMeta,
+  cameras: Cameras,
+  simulations: FilmSimulations,
 }) {
   return (
-    <PhotoGridPage photosCount={0} tags={[]} cameras={[]} simulations={[]} {...{
+    <PhotoGridContainer {...{
       cacheKey: `focal-${focal}`,
       photos,
       count,
       focal,
+      tags,
+      cameras,
+      simulations,
       header: <FocalLengthHeader {...{
         focal,
         photos,

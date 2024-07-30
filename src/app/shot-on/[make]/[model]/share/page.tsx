@@ -56,11 +56,16 @@ export default async function Share({ params: { make, model } }: CameraProps) {
     camera,
   ] = await getPhotosCameraDataCachedCached(make, model);
 
-  return <>
-    <CameraShareModal {...{ camera, photos, count, dateRange }} />
-    <CameraOverview
-      {...{ camera, photos, count, dateRange }}
-      animateOnFirstLoadOnly
-    />
-  </>;
+  return (
+    <>
+      <CameraShareModal {...{ camera, photos, count, dateRange }} />
+      <CameraOverview
+        tags={[]}
+        cameras={[]}
+        simulations={[]}
+        {...{ camera, photos, count, dateRange }}
+        animateOnFirstLoadOnly
+      />
+    </>
+  );
 }

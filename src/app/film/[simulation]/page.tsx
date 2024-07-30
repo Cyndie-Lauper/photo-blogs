@@ -59,7 +59,7 @@ export default async function FilmSimulationPage({
   });
 
   return (
-    <FilmSimulationOverview {...{
+    <FilmSimulationOverview tags={[]} cameras={[]} simulations={[]} {...{
       simulation,
       photos,
       count,

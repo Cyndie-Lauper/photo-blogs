@@ -66,6 +66,11 @@ export default async function TagPage({
   if (photos.length === 0) { redirect(PATH_ROOT); }
 
   return (
-    <FocalLengthOverview {...{ focal, photos, count, dateRange }} />
+    <FocalLengthOverview
+      tags={[]}
+      cameras={[]}
+      simulations={[]}
+      {...{ focal, photos, count, dateRange }}
+    />
   );
 }
