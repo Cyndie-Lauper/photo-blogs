@@ -16,7 +16,7 @@ export default function TagOverview({
   animateOnFirstLoadOnly?: boolean,
 }) {
   return (
-    <PhotoGridPage {...{
+    <PhotoGridPage photosCount={0} tags={[]} cameras={[]} simulations={[]} {...{
       cacheKey: `tag-${tag}`,
       photos,
       count,

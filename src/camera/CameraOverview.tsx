@@ -17,10 +17,10 @@ export default function CameraOverview({
   animateOnFirstLoadOnly?: boolean,
 }) {
   return (
-    <PhotoGridPage {...{
+    <PhotoGridPage tags={[]} cameras={[]} simulations={[]} {...{
       cacheKey: `camera-${createCameraKey(camera)}`,
       photos,
-      count,
+      photosCount: count,
       camera,
       animateOnFirstLoadOnly,
       header: <CameraHeader {...{

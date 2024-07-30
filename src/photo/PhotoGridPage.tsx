@@ -1,84 +1,50 @@
 'use client';
 
-import SiteGrid from '@/components/SiteGrid';
+import { TagsWithMeta } from '@/tag';
 import { Photo } from '.';
-import PhotoGrid from './PhotoGrid';
-import PhotoGridInfinite from './PhotoGridInfinite';
-import { Camera } from '@/camera';
-import { clsx } from 'clsx/lite';
-import AnimateItems from '@/components/AnimateItems';
-import { FilmSimulation } from '@/simulation';
-import { useCallback, useState } from 'react';
+import { Cameras } from '@/camera';
+import { FilmSimulations } from '@/simulation';
+import { PATH_GRID } from '@/site/paths';
+import PhotoGridSidebar from './PhotoGridSidebar';
+import PhotoGridContainer from './PhotoGridContainer';
+import { useEffect } from 'react';
+import { useAppState } from '@/state/AppState';
 
 export default function PhotoGridPage({
-  cacheKey,
   photos,
-  count,
-  tag,
-  camera,
-  simulation,
-  focal,
-  animateOnFirstLoadOnly,
-  header,
-  sidebar,
-}: {
-  cacheKey: string
+  photosCount,
+  tags,
+  cameras,
+  simulations,
+  // cacheKey,
+  // sidebar,
+}:{
   photos: Photo[]
-  count: number
-  tag?: string
-  camera?: Camera
-  simulation?: FilmSimulation
-  focal?: number
-  animateOnFirstLoadOnly?: boolean
-  header?: JSX.Element
-  sidebar?: JSX.Element
+  photosCount: number
+  tags: TagsWithMeta
+  cameras: Cameras
+  simulations: FilmSimulations
+  cacheKey?: string;
+  sidebar?: React.ReactNode;
 }) {
-  const [
-    shouldAnimateDynamicItems,
-    setShouldAnimateDynamicItems,
-  ] = useState(false);
-
-  const onAnimationComplete = useCallback(() =>
-    setShouldAnimateDynamicItems(true), []);
-
-  const initialOffset = photos.length;
+  const { setSelectedPhotoIds } = useAppState();
+  
+  useEffect(() => () => setSelectedPhotoIds?.([]), [setSelectedPhotoIds]);
 
   return (
-    <SiteGrid
-      contentMain={<div className={clsx(
-        header && 'space-y-8 mt-4',
-      )}>
-        {header &&
-          <AnimateItems
-            type="bottom"
-            items={[header]}
-            animateOnFirstLoadOnly
-          />}
-        <div className="space-y-0.5 sm:space-y-1">
-          <PhotoGrid {...{
-            photos,
-            tag,
-            camera,
-            simulation,
-            focal,
-            animateOnFirstLoadOnly,
-            onAnimationComplete,
-          }} />
-          {count > initialOffset &&
-            <PhotoGridInfinite {...{
-              cacheKey,
-              initialOffset,
-              canStart: shouldAnimateDynamicItems,
-              tag,
-              camera,
-              simulation,
-              focal,
-              animateOnFirstLoadOnly,
-            }} />}
-        </div>
+    <PhotoGridContainer
+      cacheKey={`page-${PATH_GRID}`}
+      photos={photos}
+      count={photosCount}
+      sidebar={<div className="sticky top-4 space-y-4 mt-[-4px]">
+        <PhotoGridSidebar {...{
+          tags,
+          cameras,
+          simulations,
+          photosCount,
+        }} />
       </div>}
-      contentSide={sidebar}
-      sideHiddenOnMobile
+      canSelect
     />
   );
 }

@@ -2,6 +2,7 @@ import { Photo, PhotoDateRange } from '@/photo';
 import PhotoGridPage from '@/photo/PhotoGridPage';
 import FocalLengthHeader from './FocalLengthHeader';
 
+
 export default function FocalLengthOverview({
   focal,
   photos,
@@ -14,9 +15,10 @@ export default function FocalLengthOverview({
   count: number,
   dateRange?: PhotoDateRange,
   animateOnFirstLoadOnly?: boolean,
+
 }) {
   return (
-    <PhotoGridPage {...{
+    <PhotoGridPage photosCount={0} tags={[]} cameras={[]} simulations={[]} {...{
       cacheKey: `focal-${focal}`,
       photos,
       count,

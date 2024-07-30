@@ -41,7 +41,10 @@ export default async function GridPage() {
       ? <PhotoGridPage
         cacheKey={`page-${PATH_GRID}`}
         photos={photos}
-        count={photosCount}
+        photosCount={photosCount}
+        tags={tags}
+        cameras={cameras}
+        simulations={simulations}
         sidebar={<div className="sticky top-4 space-y-4 mt-[-4px]">
           <PhotoGridSidebar {...{
             tags,

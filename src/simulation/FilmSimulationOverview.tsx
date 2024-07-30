@@ -17,8 +17,8 @@ export default function FilmSimulationOverview({
   animateOnFirstLoadOnly?: boolean,
 }) {
   return (
-    <PhotoGridPage {...{
-      cacheKey: `simulation-${simulation}`, 
+    <PhotoGridPage photosCount={0} tags={[]} cameras={[]} simulations={[]} {...{
+      cacheKey: `simulation-${simulation}`,
       photos,
       count,
       simulation,
