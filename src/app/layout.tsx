@@ -17,7 +17,7 @@ import Footer from '@/site/Footer';
 import CommandK from '@/site/CommandK';
 import SwrConfigClient from '../state/SwrConfigClient';
 import AdminBatchEditPanel from '@/admin/AdminBatchEditPanel';
-
+import SmoothScroll from '@/app/components/SmoothScroll';
 
 import '../site/globals.css';
 import '../site/sonner.css';
@@ -89,7 +89,7 @@ export default function RootLayout({
                   'min-h-[16rem] sm:min-h-[30rem]',
                   'mb-12',
                 )}>
-                  {children}
+                  <SmoothScroll>{children}</SmoothScroll>
                 </div>
                 <Footer />
               </main>
