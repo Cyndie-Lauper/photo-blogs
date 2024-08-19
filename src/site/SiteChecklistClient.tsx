@@ -61,6 +61,8 @@ export default function SiteChecklistClient({
   isOgTextBottomAligned,
   gridAspectRatio,
   hasGridAspectRatio,
+  gridDensity,
+  hasGridDensityPreference,
   // Connection status
   databaseError,
   storageError,
@@ -330,6 +332,16 @@ export default function SiteChecklistClient({
           >
             Store in environment variable (mainly used for OG meta):
             {renderEnvVars(['NEXT_PUBLIC_SITE_DESCRIPTION'])}
+          </ChecklistRow>
+          <ChecklistRow
+            title={`Grid density: ${gridDensity ? 'low' : 'high'}`}
+            status={hasGridDensityPreference}
+            optional
+          >
+              Set environment variable to {'"1"'} to ensure large thumbnails
+              on photo grid views (if not configured, density is based on
+              aspect ratio configuration):
+            {renderEnvVars(['NEXT_PUBLIC_SHOW_LARGE_THUMBNAILS'])}
           </ChecklistRow>
 
         </Checklist>
