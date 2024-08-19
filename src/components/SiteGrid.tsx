@@ -24,7 +24,8 @@ export default function SiteGrid({
         'grid-cols-1 md:grid-cols-12',
         'gap-x-4 lg:gap-x-6',
         'gap-y-4',
-        'max-w-7xl',
+        'max-w-[1280px]',
+        // Offset sidebar width when centering on large screens
         '3xl:translate-x-[163px]',
         className,
       )}
