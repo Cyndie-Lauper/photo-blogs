@@ -4,6 +4,7 @@ import { clsx } from 'clsx/lite';
 import { IBM_Plex_Mono } from 'next/font/google';
 import {
   BASE_URL,
+  CENTERED_LARGE_SCREENS,
   SITE_DESCRIPTION,
   SITE_TITLE,
 } from '@/site/config';
@@ -26,6 +27,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
