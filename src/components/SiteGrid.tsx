@@ -25,6 +25,7 @@ export default function SiteGrid({
         'gap-x-4 lg:gap-x-6',
         'gap-y-4',
         'max-w-7xl',
+        '3xl:translate-x-[163px]',
         className,
       )}
     >
