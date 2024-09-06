@@ -85,18 +85,20 @@ export default function CommandKClient({
     hiddenPhotosCount,
     selectedPhotoIds,
     setSelectedPhotoIds,
+    isGridHighDensity,
     arePhotosMatted,
     shouldShowBaselineGrid,
     shouldDebugImageFallbacks,
     setIsCommandKOpen: setIsOpen,
     setShouldRespondToKeyboardCommands,
     setShouldShowBaselineGrid,
+    setIsGridHighDensity,
     setArePhotosMatted,
     setShouldDebugImageFallbacks,
   } = useAppState();
 
   const isOpenRef = useRef(isOpen);
-  
+
   const [isPending, startTransition] = useTransition();
   const [keyPending, setKeyPending] = useState<string>();
   const shouldCloseAfterPending = useRef(false);
@@ -238,7 +240,10 @@ export default function CommandKClient({
       items: [{
         label: 'Toggle Photo Matting',
         action: () => setArePhotosMatted?.(prev => !prev),
-        annotation: arePhotosMatted ? <FaCheck size={12} /> : undefined,
+      }, {
+        label: 'Toggle High Density Grid',
+        action: () => setIsGridHighDensity?.(prev => !prev),
+        annotation: isGridHighDensity ? <FaCheck size={12} /> : undefined,
       }, {
         label: 'Toggle Image Fallbacks',
         action: () => setShouldDebugImageFallbacks?.(prev => !prev),
@@ -264,7 +269,7 @@ export default function CommandKClient({
       path: PATH_GRID_INFERRED,
     });
   }
-  
+
   const sectionPages: CommandKSection = {
     heading: 'Pages',
     accessory: <HiDocumentText size={15} className="translate-x-[-1px]" />,
