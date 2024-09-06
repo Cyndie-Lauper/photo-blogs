@@ -74,6 +74,7 @@ export default function SiteChecklistClient({
   secret,
   baseUrl,
   commitSha,
+  commitMessage,
 }: ConfigChecklistStatus &
   Partial<Awaited<ReturnType<typeof testConnectionsAction>>> & {
   simplifiedView?: boolean
