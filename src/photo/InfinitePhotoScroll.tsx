@@ -11,11 +11,9 @@ import {
 import SiteGrid from '@/components/SiteGrid';
 import Spinner from '@/components/Spinner';
 import { getPhotosCachedAction, getPhotosAction } from '@/photo/actions';
-import { Photo } from '.';
+import { Photo, PhotoSetAttributes } from '.';
 import { clsx } from 'clsx/lite';
 import { useAppState } from '@/state/AppState';
-import { Camera } from '@/camera';
-import { FilmSimulation } from '@/simulation';
 import { GetPhotosOptions } from './db';
 
 export type RevalidatePhoto = (
@@ -38,10 +36,7 @@ export default function InfinitePhotoScroll({
 }: {
   initialOffset: number
   itemsPerPage: number
-  tag?: string
   sortBy?: GetPhotosOptions['sortBy']
-  camera?: Camera
-  simulation?: FilmSimulation
   cacheKey: string
   wrapMoreButtonInGrid?: boolean
   useCachedPhotos?: boolean
@@ -51,7 +46,7 @@ export default function InfinitePhotoScroll({
     onLastPhotoVisible: () => void
     revalidatePhoto?: RevalidatePhoto
   }) => ReactNode
-}) {
+} & PhotoSetAttributes) {
   const { swrTimestamp, isUserSignedIn } = useAppState();
 
   const key = `${swrTimestamp}-${cacheKey}`;
@@ -96,7 +91,7 @@ export default function InfinitePhotoScroll({
     );
 
   const buttonContainerRef = useRef<HTMLDivElement>(null);
-  
+
   const isLoadingOrValidating = isLoading || isValidating;
 
   const isFinished = useMemo(() =>
@@ -143,7 +138,7 @@ export default function InfinitePhotoScroll({
   return (
     <div className="space-y-4">
       {children({
-        photos, 
+        photos,
         onLastPhotoVisible: advance,
         revalidatePhoto,
       })}
