@@ -35,7 +35,7 @@ import {
 } from '@/site/paths';
 import { blurImageFromUrl, extractImageDataFromBlobPath } from './server';
 import { TAG_FAVS, isTagFavs } from '@/tag';
-import { convertPhotoToPhotoDbInsert } from '.';
+import { convertPhotoToPhotoDbInsert, Photo } from '.';
 import { runAuthenticatedAdminServerAction } from '@/auth';
 import { AI_IMAGE_QUERIES, AiImageQuery } from './ai';
 import { streamOpenAiImageQuery } from '@/services/openai';
@@ -62,7 +62,7 @@ export const createPhotoAction = async (formData: FormData) =>
       urlOrigin: photo.url,
       shouldStripGpsData,
     });
-    
+
     if (updatedUrl) {
       photo.url = updatedUrl;
       await insertPhoto(photo);
@@ -226,7 +226,7 @@ export const deletePhotosAction = async (photoIds: string[]) =>
     }
     revalidateAllKeysAndPaths();
   });
-  
+
 export const toggleFavoritePhotoAction = async (
   photoId: string,
   shouldRedirect?: boolean,
@@ -410,7 +410,9 @@ export const getPhotosCachedAction = async (options: GetPhotosOptions) =>
     : getPhotosCached(options);
 
 // Public actions
-
-export const queryPhotosByTitleAction = async (query: string) =>
-  (await getPhotos({ query, limit: 10 }))
-    .filter(({ title }) => Boolean(title));
+export const searchPhotosAction = async (query: string) =>
+  getPhotos({ query, limit: 10 })
+    .catch(e => {
+      console.error('Could not query photos', e);
+      return [] as Photo[];
+    });
