@@ -65,7 +65,7 @@ const runMigration01 = () =>
     ADD COLUMN IF NOT EXISTS caption TEXT,
     ADD COLUMN IF NOT EXISTS semantic_description TEXT
   `;
-  
+
 // Migration 02
 const MIGRATION_FIELDS_02 = ['lens_make', 'lens_model'];
 const runMigration02 = () =>
@@ -126,7 +126,10 @@ const safelyQueryPhotos = async <T>(
         throw e;
       }
     } else {
-      console.log(`sql get error: ${e.message} `);
+      if (e.message !== 'The server does not support SSL connections') {
+        // Avoid re-logging errors on initial installation
+        console.log(`sql get error: ${e.message} `);
+      }
       throw e;
     }
   }
@@ -263,7 +266,7 @@ export const renamePhotoTagGlobally = (tag: string, updatedTag: string) =>
 
 export const addTagsToPhotos = (tags: string[], photoIds: string[]) =>
   safelyQueryPhotos(() => query(`
-      UPDATE photos 
+      UPDATE photos
       SET tags = (
         SELECT array_agg(DISTINCT elem)
         FROM unnest(
