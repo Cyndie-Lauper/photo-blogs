@@ -48,6 +48,7 @@ export default function SiteChecklistClient({
   showExifInfo,
   isProModeEnabled,
   isStaticallyOptimized,
+  isGridHomepageEnabled,
   arePagesStaticallyOptimized,
   areOGImagesStaticallyOptimized,
   arePhotosMatted,
@@ -480,6 +481,15 @@ export default function SiteChecklistClient({
               Set environment variable to {'"1"'} to prevent
               priority order photo field affecting photo order
               {renderEnvVars(['NEXT_PUBLIC_IGNORE_PRIORITY_ORDER'])}
+            </ChecklistRow>
+            <ChecklistRow
+              title="Grid homepage"
+              status={isGridHomepageEnabled}
+              optional
+            >
+              Set environment variable to {'"1"'} to show grid layout
+              on homepage:
+              {renderEnvVars(['NEXT_PUBLIC_GRID_HOMEPAGE'])}
             </ChecklistRow>
             <ChecklistRow
               title="Public API"
