@@ -32,6 +32,7 @@ import { useRef } from 'react';
 import useOnVisible from '@/utility/useOnVisible';
 import PhotoDate from './PhotoDate';
 import { useAppState } from '@/state/AppState';
+import React from 'react';
 
 export default function PhotoLarge({
   photo,

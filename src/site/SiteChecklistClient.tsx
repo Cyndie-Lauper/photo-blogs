@@ -26,6 +26,7 @@ import { testConnectionsAction } from '@/admin/actions';
 import ErrorNote from '@/components/ErrorNote';
 import Spinner from '@/components/Spinner';
 import WarningNote from '@/components/WarningNote';
+import React from 'react';
 
 export default function SiteChecklistClient({
   // Config checklist
@@ -51,6 +52,7 @@ export default function SiteChecklistClient({
   areOGImagesStaticallyOptimized,
   arePhotosMatted,
   isBlurEnabled,
+  arePublicDownloadsEnabled,
   isGeoPrivacyEnabled,
   isPriorityOrderEnabled,
   isAiTextGenerationEnabled,
@@ -368,6 +370,15 @@ export default function SiteChecklistClient({
               for AI-generated text descriptions and enable an invisible field
               called {'"Semantic Description"'} used to support CMD-K search
               {renderEnvVars(['OPENAI_SECRET_KEY'])}
+            </ChecklistRow>
+            <ChecklistRow
+              title="Public downloads"
+              status={arePublicDownloadsEnabled}
+              optional
+            >
+              Set environment variable to {'"1"'} to enable
+              public photo downloads:
+              {renderEnvVars(['NEXT_PUBLIC_ALLOW_PUBLIC_DOWNLOADS'])}
             </ChecklistRow>
             <ChecklistRow
               title={hasVercelKv && isTestingConnections
