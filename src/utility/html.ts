@@ -1,6 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 const ALLOWED_FORMATTING_TAGS = ["b", "strong", "i", "em", "u", "br"];
-export const safelyParseFormattedHTML = (text: string) =>
+export const safelyParseFormattedHtml = (text: string) =>
     sanitizeHtml(text, {
         allowedTags: ALLOWED_FORMATTING_TAGS,
     });

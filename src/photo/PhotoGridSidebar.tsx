@@ -16,7 +16,7 @@ import { useAppState } from '@/state/AppState';
 import { useMemo } from 'react';
 import HiddenTag from '@/tag/HiddenTag';
 import { SITE_ABOUT } from '@/site/config';
-import { htmlHasBrParagraphBreaks, safelyParseFormattedHTML } from '@/utility/html';
+import { htmlHasBrParagraphBreaks, safelyParseFormattedHtml } from '@/utility/html';
 import { clsx } from 'clsx/lite';
 import React from 'react';
 
@@ -51,7 +51,7 @@ export default function PhotoGridSidebar({
             htmlHasBrParagraphBreaks(SITE_ABOUT) && 'pb-2',
           )}
           dangerouslySetInnerHTML={{
-            __html: safelyParseFormattedHTML(SITE_ABOUT),
+            __html: safelyParseFormattedHtml(SITE_ABOUT),
           }}
         />]}
       />}
